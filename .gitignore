@@ -1,0 +1,22 @@
+# SSH key, нууц файл
+*.pub
+id_*
+*.pem
+.env
+
+# C build гаралт
+*.o
+*.out
+build/
+src/validator
+
+# Python
+__pycache__/
+*.pyc
+venv/
+
+# Editor, OS
+.vscode/
+.idea/
+.DS_Store
+*.swp
