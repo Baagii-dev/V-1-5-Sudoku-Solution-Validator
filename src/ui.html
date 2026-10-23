@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sudoku Solution Validator</title>
+<style>
+body{font-family:-apple-system,Segoe UI,sans-serif;background:#fafaf8;color:#222;padding:24px;max-width:1100px;margin:auto}
+h1{font-size:20px;margin:0 0 16px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+button,select,.filebtn{font-size:14px;padding:6px 12px}
+.filebtn{border:1px solid #767676;border-radius:3px;background:#efefef;cursor:pointer}
+.wrap{display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start}
+.g{display:grid;grid-template-columns:repeat(9,38px);border:2px solid #444;width:max-content}
+.c{width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-size:17px;border:0.5px solid #ccc;background:#fff}
+.c.row{background:#e6f1fb}.c.col{background:#eaf3de}.c.box{background:#faeeda}
+.c.bad{background:#fcebeb;color:#a32d2d;font-weight:700}
+.c.inerr{background:#fcebeb;outline:2px solid #a32d2d;outline-offset:-2px}
+textarea{font-family:ui-monospace,Menlo,monospace;font-size:14px;width:240px;height:200px}
+.lg{display:inline-flex;align-items:center;gap:4px;font-size:13px;color:#666;margin-right:12px}
+.sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+#th{min-width:300px;border:1px solid #ddd;border-radius:12px;padding:6px 0;background:#fff}
+.tr{display:flex;justify-content:space-between;gap:12px;font-size:14px;padding:5px 12px;border-bottom:1px solid #eee}
+.tr:last-child{border-bottom:0}
+#msg{font-size:15px;font-weight:600}
+#errs{color:#a32d2d;font-size:14px;margin:8px 0 0;padding-left:18px}
+.ok{color:#3b6d11}.err{color:#a32d2d}.run{color:#b26a00}.wait{color:#888}
+</style>
+</head>
+<body>
+<h1>Sudoku Solution Validator (V-1-5)</h1>
+<p style="margin:0 0 16px;color:#555;font-size:14px">1) Тестийн өгөгдөл сонгох эсвэл хүснэгтээ бичих/файлаас ачаалах &rarr; 2) <b>Ажиллуулах</b> дарах &rarr; 3) самбар болон баруун талын урсгалын төлвийг ажиглах.</p>
+<div class="bar">
+  <select id="sample" aria-label="Тестийн өгөгдөл"></select>
+  <select id="mode" aria-label="Урсгалын горим">
+    <option value="11">11 урсгал (мөр, багана, 9 дэд хүснэгт)</option>
+    <option value="27">27 урсгал (мөр, багана, дэд хүснэгт бүр)</option>
+  </select>
+  <label>Хурд <select id="speed"><option value="900">удаан</option><option value="450" selected>дунд</option><option value="120">хурдан</option><option value="0">шууд</option></select></label>
+  <label class="filebtn" title="9 мөртэй .txt файл">Файл ачаалах<input type="file" id="file" accept=".txt,text/plain" hidden></label>
+  <button id="run">▶ Ажиллуулах</button>
+  <button id="rst">⟲ Reset</button>
+  <span id="msg"></span>
+</div>
+<div class="wrap">
+  <div>
+    <textarea id="input" spellcheck="false" aria-label="Sudoku хүснэгт"></textarea>
+    <div style="font-size:12px;color:#666;margin-top:4px">9 мөр, мөр бүрд 9 тоо (1–9).<br>Өөрөө засаж болно.</div>
+  </div>
+  <div>
+    <div class="g" id="g"></div>
+    <div style="margin-top:8px">
+      <span class="lg"><span class="sw" style="background:#e6f1fb"></span>Мөр шалгаж байна</span>
+      <span class="lg"><span class="sw" style="background:#eaf3de"></span>Багана</span>
+      <span class="lg"><span class="sw" style="background:#faeeda"></span>Дэд хүснэгт</span>
+      <span class="lg"><span class="sw" style="background:#fcebeb"></span>Давхардсан / алдаатай</span>
+    </div>
+    <ul id="errs"></ul>
+  </div>
+  <div id="th"></div>
+</div>
+<script>
+const $ = id => document.getElementById(id);
+const g = $('g'), th = $('th'), msg = $('msg'), errs = $('errs'), input = $('input');
+const DESC = {
+  'valid_book.txt': 'Зөв шийд (номын жишээ)',
+  'invalid_row.txt': 'Мөрт давхардал',
+  'invalid_col.txt': 'Баганад давхардал',
+  'invalid_box.txt': '3x3 дэд хүснэгтэд давхардал',
+  'invalid_cell.txt': 'Нэг нүд мөр, багана, дэд хүснэгтэд зэрэг буруу',
+  'bad_letter.txt': 'Оролтын алдаа: тоо биш тэмдэгт',
+  'bad_range.txt': 'Оролтын алдаа: 1–9-өөс гадуур',
+  'bad_short.txt': 'Оролтын алдаа: мөр дутуу'
+};
+let timer = null, board = null, bad = new Set(), cur = null, threads = [], status = [], errCells = new Set();
+
+function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e; }
+
+function drawBoard() {
+  g.replaceChildren();
+  for (let r = 0; r < 9; r++) for (let c = 0; c < 9; c++) {
+    const d = el('div', 'c', board ? board[r][c] : '');
+    const k = r * 9 + c;
+    if (bad.has(k)) d.classList.add('bad');
+    else if (errCells.has(k)) d.classList.add('inerr');
+    else if (cur && cur.cells.has(k)) d.classList.add(cur.kind);
+    if (c % 3 === 2 && c < 8) d.style.borderRight = '2px solid #444';
+    if (r % 3 === 2 && r < 8) d.style.borderBottom = '2px solid #444';
+    g.appendChild(d);
+  }
+}
+
+const label = {wait: 'хүлээж буй', run: 'ажиллаж байна', ok: 'OK', err: 'АЛДАА'};
+function drawThreads() {
+  th.replaceChildren();
+  threads.forEach((t, i) => {
+    const row = el('div', 'tr');
+    row.appendChild(el('span', '', t.name));
+    row.appendChild(el('span', status[i], label[status[i]]));
+    th.appendChild(row);
+  });
+}
+
+function placeholderThreads() {
+  const n = [];
+  if (Number($('mode').value) === 27) {
+    for (let i = 1; i <= 9; i++) n.push({name: `T${i} Мөр ${i}`});
+    for (let i = 1; i <= 9; i++) n.push({name: `T${i + 9} Багана ${i}`});
+    for (let i = 1; i <= 9; i++) n.push({name: `T${i + 18} Дэд хүснэгт ${i}`});
+  } else {
+    n.push({name: 'T1 Бүх мөр'}, {name: 'T2 Бүх багана'});
+    for (let i = 1; i <= 9; i++) n.push({name: `T${i + 2} Дэд хүснэгт ${i}`});
+  }
+  threads = n; status = n.map(() => 'wait');
+}
+
+function reset() {
+  clearInterval(timer); timer = null;
+  board = null; bad = new Set(); cur = null; threads = []; status = []; errCells = new Set();
+  msg.textContent = ''; msg.className = ''; errs.replaceChildren();
+  placeholderThreads(); parseLocal(); drawBoard(); drawThreads();
+}
+
+function parseLocal() { // зөвхөн дүрслэхэд; жинхэнэ шалгалтыг сервер хийнэ
+  const rows = input.value.trim().split(/\n+/).map(l => l.trim().split(/[\s,]+/));
+  if (rows.length === 9 && rows.every(r => r.length === 9 && r.every(x => /^\d+$/.test(x)))) board = rows.map(r => r.map(Number));
+}
+
+function showInputErrors(list) {
+  msg.textContent = 'Оролтын алдаа'; msg.className = 'err';
+  list.forEach(e => {
+    errs.appendChild(el('li', '', e.message));
+    if (e.row && e.col) errCells.add((e.row - 1) * 9 + (e.col - 1));
+  });
+}
+
+async function run() {
+  reset();
+  let data;
+  try {
+    const res = await fetch('/api/validate', {method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({board: input.value, mode: Number($('mode').value)})});
+    data = await res.json();
+    if (!res.ok) { showInputErrors(data.errors || [{message: 'Серверийн алдаа'}]); drawBoard(); return; }
+  } catch (e) {
+    msg.textContent = 'Сервертэй холбогдож чадсангүй (python src/app.py ажиллаж байгаа эсэхийг шалгана уу)'; msg.className = 'err'; return;
+  }
+  board = data.board; threads = data.threads; status = threads.map(() => 'wait');
+  const steps = [];
+  threads.forEach((t, ti) => t.groups.forEach((gr, gi) => steps.push({ti, gi, last: gi === t.groups.length - 1})));
+  let n = 0;
+  const finish = () => {
+    clearInterval(timer); timer = null; cur = null; drawBoard(); drawThreads();
+    msg.textContent = data.valid ? 'Зөв шийд' : 'Буруу шийд'; msg.className = data.valid ? 'ok' : 'err';
+  };
+  const step = () => {
+    if (n >= steps.length) return finish();
+    const {ti, gi, last} = steps[n++], t = threads[ti], gr = t.groups[gi];
+    cur = {kind: t.kind, cells: new Set(gr.cells.map(([r, c]) => r * 9 + c))};
+    status[ti] = 'run';
+    gr.bad.forEach(([r, c]) => bad.add(r * 9 + c));
+    if (last) status[ti] = t.ok ? 'ok' : 'err';
+    drawBoard(); drawThreads();
+  };
+  const delay = Number($('speed').value);
+  if (delay === 0) { while (n < steps.length) step(); finish(); } else { step(); timer = setInterval(step, delay); }
+}
+
+async function init() {
+  try {
+    const samples = await (await fetch('/api/samples')).json();
+    samples.forEach(s => { const o = el('option', '', DESC[s.name] ? `${DESC[s.name]} (${s.name})` : s.name); o.dataset.name = s.name; o.value = s.text; $('sample').appendChild(o); });
+    const def = [...$('sample').options].find(o => o.dataset.name === 'valid_book.txt') || $('sample').options[0];
+    if (def) { $('sample').value = def.value; input.value = def.value; }
+  } catch (e) { msg.textContent = 'Тестийн жагсаалт ачаалж чадсангүй'; msg.className = 'err'; }
+  // Холбоосоор тохируулах: ?sample=invalid_row.txt&mode=27&speed=0&autorun=1
+  const q = new URLSearchParams(location.search);
+  const opt = [...$('sample').options].find(o => o.dataset.name === q.get('sample'));
+  if (opt) { $('sample').value = opt.value; input.value = opt.value; }
+  if (['11', '27'].includes(q.get('mode'))) $('mode').value = q.get('mode');
+  if ([...$('speed').options].some(o => o.value === q.get('speed'))) $('speed').value = q.get('speed');
+  reset();
+  if (q.get('autorun') === '1') run();
+}
+$('sample').onchange = () => { input.value = $('sample').value; reset(); };
+input.oninput = () => { clearInterval(timer); bad = new Set(); cur = null; threads = []; status = []; errCells = new Set(); board = null; msg.textContent = ''; errs.replaceChildren(); placeholderThreads(); parseLocal(); drawBoard(); drawThreads(); };
+$('file').onchange = async e => {
+  const f = e.target.files[0]; if (!f) return;
+  input.value = await f.text(); e.target.value = ''; input.oninput();
+};
+$('mode').onchange = reset;
+$('run').onclick = run;
+$('rst').onclick = reset;
+init();
+</script>
+</body>
+</html>
