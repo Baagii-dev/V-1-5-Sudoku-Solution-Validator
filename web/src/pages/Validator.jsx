@@ -34,6 +34,7 @@ export default function Validator() {
   const [step, setStep] = useState(0); // хэдэн бүлэг шалгагдсан бэ
   const [errors, setErrors] = useState([]); // оролтын алдаа
   const [busy, setBusy] = useState(false);
+  const [wall, setWall] = useState(null); // validate()-ийн нийт хугацаа, мс
   const timer = useRef(null);
 
   const stop = () => {
@@ -47,6 +48,7 @@ export default function Validator() {
     setStep(0);
     setErrors([]);
     setBusy(false);
+    setWall(null);
   }, []);
 
   // Бүлэг бүр (урсгал, бүлгийн индекс) нэг алхам болно.
@@ -68,6 +70,7 @@ export default function Validator() {
     setErrors([]);
     setBusy(true);
     let result;
+    const t0 = performance.now();
     try {
       result = await validate(parsed.board, mode);
     } catch (e) {
@@ -76,6 +79,7 @@ export default function Validator() {
       return;
     }
     setBusy(false);
+    setWall(Math.round((performance.now() - t0) * 10) / 10);
     setRun({ board: parsed.board, threads: result.threads, valid: result.valid });
     const total = result.threads.reduce((n, t) => n + t.groups.length, 0);
     const delay = Number(speed);
@@ -132,6 +136,9 @@ export default function Validator() {
     reset();
   };
 
+  const okCount = status.filter((x) => x === 'ok').length;
+  const errCount = status.filter((x) => x === 'err').length;
+
   let message = '';
   let messageClass = '';
   if (errors.length) [message, messageClass] = ['Оролтын алдаа', 'err'];
@@ -139,50 +146,60 @@ export default function Validator() {
   else if (done) [message, messageClass] = run.valid ? ['Зөв шийд', 'ok'] : ['Буруу шийд', 'err'];
 
   return (
-    <div>
-      <h1>Шалгагчийг ажиллуулах</h1>
-      <ol className="steps">
-        <li><b>Өгөгдөл сонгох:</b> жагсаалтаас тест сонгох, хүснэгтээ текст талбарт бичих эсвэл <i>Файл ачаалах</i>-аар .txt оруулах.</li>
-        <li><b>Горим сонгох:</b> 11 урсгал (мөр, багана, 9 дэд хүснэгт) эсвэл 27 урсгал (бүлэг бүрт тусдаа). Хурдыг тохируулна.</li>
-        <li><b>Ажиллуулах</b> дарах: ажил бүрийг хөтөчийн Web Worker урсгал гүйцэтгэнэ.</li>
-        <li><b>Ажиглах:</b> самбар дээр шалгаж буй бүлэг өнгөөр тодорч, давхардсан нүд улаан болно. Доор урсгал бүрийн төлөв <i>хүлээж буй → ажиллаж байна → OK/АЛДАА</i> өөрчлөгдөнө. Дээд талд эцсийн дүгнэлт гарна.</li>
-      </ol>
-      <div className="bar">
-        <select
-          aria-label="Тестийн өгөгдөл"
-          value={SAMPLES.find((s) => s.text === text)?.name ?? ''}
-          onChange={(e) => {
-            setText(SAMPLES.find((s) => s.name === e.target.value).text);
-            reset();
-          }}
-        >
-          <option value="" disabled>Өөрийн өгөгдөл</option>
-          {SAMPLES.map((s) => (
-            <option key={s.name} value={s.name}>{s.label}</option>
-          ))}
-        </select>
-        <select aria-label="Урсгалын горим" value={mode} onChange={(e) => { setMode(Number(e.target.value)); reset(); }}>
-          <option value={11}>11 урсгал (мөр, багана, 9 дэд хүснэгт)</option>
-          <option value={27}>27 урсгал (мөр, багана, дэд хүснэгт бүр)</option>
-        </select>
-        <label>
-          Хурд{' '}
-          <select value={speed} onChange={(e) => setSpeed(e.target.value)}>
-            {SPEEDS.map(([v, l]) => (
-              <option key={v} value={v}>{l}</option>
-            ))}
-          </select>
-        </label>
-        <label className="filebtn" title="9 мөртэй .txt файл">
-          Файл ачаалах
-          <input type="file" accept=".txt,text/plain" hidden onChange={onFile} />
-        </label>
-        <button onClick={start} disabled={busy}>▶ Ажиллуулах</button>
-        <button onClick={reset}>⟲ Reset</button>
-        <span className={`msg ${messageClass}`}>{message}</span>
+    <div className="vpage">
+      <div className="vhead">
+        <h1>Шалгагчийг ажиллуулах</h1>
+        <ol className="chips">
+          <li><b>1</b> Өгөгдөл сонгох</li>
+          <li><b>2</b> Горим сонгох</li>
+          <li><b>3</b> Ажиллуулах</li>
+          <li><b>4</b> Ажиглах</li>
+        </ol>
       </div>
-      <div className="wrap">
-        <div>
+
+      <section className="panel input">
+        <div className="controls">
+          <label className="fld">
+            <span>Тестийн өгөгдөл</span>
+            <select
+              aria-label="Тестийн өгөгдөл"
+              value={SAMPLES.find((s) => s.text === text)?.name ?? ''}
+              onChange={(e) => {
+                setText(SAMPLES.find((s) => s.name === e.target.value).text);
+                reset();
+              }}
+            >
+              <option value="" disabled>Өөрийн өгөгдөл</option>
+              {SAMPLES.map((s) => (
+                <option key={s.name} value={s.name}>{s.label}</option>
+              ))}
+            </select>
+          </label>
+          <label className="fld">
+            <span>Урсгалын горим</span>
+            <select aria-label="Урсгалын горим" value={mode} onChange={(e) => { setMode(Number(e.target.value)); reset(); }}>
+              <option value={11}>11 урсгал (мөр, багана, 9 дэд хүснэгт)</option>
+              <option value={27}>27 урсгал (мөр, багана, дэд хүснэгт бүр)</option>
+            </select>
+          </label>
+          <label className="fld">
+            <span>Хурд</span>
+            <select value={speed} onChange={(e) => setSpeed(e.target.value)}>
+              {SPEEDS.map(([v, l]) => (
+                <option key={v} value={v}>{l}</option>
+              ))}
+            </select>
+          </label>
+          <div className="actions">
+            <button className="primary" onClick={start} disabled={busy}>▶ Ажиллуулах</button>
+            <button onClick={reset}>⟲ Reset</button>
+            <label className="filebtn" title="9 мөртэй .txt файл">
+              Файл ачаалах
+              <input type="file" accept=".txt,text/plain" hidden onChange={onFile} />
+            </label>
+          </div>
+        </div>
+        <div className="editor">
           <textarea
             spellCheck="false"
             aria-label="Sudoku хүснэгт"
@@ -192,13 +209,22 @@ export default function Validator() {
               reset();
             }}
           />
-          <div className="note">
-            9 мөр, мөр бүрд 9 тоо (1–9).
-            <br />
-            Өөрөө засаж болно.
-          </div>
+          <div className="note">9 мөр, мөр бүрд 9 тоо (1–9). Өөрөө засаж болно.</div>
         </div>
-        <div>
+      </section>
+
+      <div className="stats">
+        <div className={`stat big ${messageClass}`}><span>Дүгнэлт</span><b>{message || '—'}</b></div>
+        <div className="stat"><span>Урсгал</span><b>{threads.length}</b></div>
+        <div className="stat ok"><span>OK</span><b>{okCount}</b></div>
+        <div className="stat err"><span>АЛДАА</span><b>{errCount}</b></div>
+        <div className="stat"><span>Давхардсан нүд</span><b>{run ? bad.size : '—'}</b></div>
+        <div className="stat"><span>Нийт хугацаа</span><b>{wall !== null ? `${wall} мс` : '—'}</b></div>
+      </div>
+
+      <div className="main">
+        <section className="panel boardpanel">
+          <h2 className="ptitle">Sudoku самбар</h2>
           <Board board={preview} bad={bad} errCells={errCells} cur={cur} />
           {errors.length > 0 && (
             <ul className="errs">
@@ -207,9 +233,9 @@ export default function Validator() {
               ))}
             </ul>
           )}
-        </div>
+        </section>
+        <ThreadDiagram threads={threads} status={status} results={run?.threads} />
       </div>
-      <ThreadDiagram threads={threads} status={status} results={run?.threads} />
     </div>
   );
 }
