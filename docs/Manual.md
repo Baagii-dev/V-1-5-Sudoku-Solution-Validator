@@ -27,6 +27,8 @@ python3 src/app.py
 - Хөтөч автоматаар нээхгүй байх: `python3 src/app.py --no-browser`
 - Windows дээр `python3` олдохгүй бол `python` (эсвэл `py`) гэж бичнэ.
 
+**Онлайн хувилбарын шаардлага:** орчин үеийн вэб хөтөч (Web Worker дэмждэг). Python суулгах шаардлагагүй.
+
 ### 1.4 Оролт ба тохиргоо
 | Удирдлага | Утга |
 |---|---|
@@ -59,6 +61,8 @@ python3 src/app.py
 
 Холбоосоор шууд нээх: `http://127.0.0.1:8000/?sample=invalid_row.txt&mode=11&autorun=1`
 
+Онлайн хувилбарт холбоосыг ингэж өгч болно: `https://baagii-dev.github.io/V-1-5-Sudoku-Solution-Validator/?sample=invalid_row.txt&mode=11&autorun=1`
+
 ### 1.8 Түгээмэл алдаа ба шийдэл
 | Мессеж | Шалтгаан | Шийдэл |
 |---|---|---|
@@ -87,7 +91,7 @@ cd V-1-5-Sudoku-Solution-Validator
 | Хөтөч | Google Chrome 155 |
 
 ### 2.3 Dependency
-Гадны сан байхгүй. Зөвхөн Python-ы стандарт сан хэрэглэнэ. Build хийх шаардлагагүй.
+Python хувилбарт гадны сан байхгүй, зөвхөн стандарт сан хэрэглэнэ, build хэрэггүй. Онлайн хувилбарын эх код (`web/`) React, Vite хэрэглэх ба Node 22, `npm ci` шаардана.
 
 ### 2.4 Run команд
 ```bash
@@ -95,6 +99,8 @@ python3 src/app.py
 python3 src/validator.py tests/valid_book.txt        
 python3 src/validator.py --mode=27 tests/invalid_box.txt
 python3 tests/test_validator.py                     
+cd web && npm ci && npm run dev    # онлайн хувилбарыг локал дээр
+cd web && npm test                 # JavaScript тест
 ```
 
 ### 2.5 Үндсэн тестийн өгөгдөл
@@ -114,8 +120,9 @@ python3 tests/test_validator.py
 | `tests/bad_short.txt` | `9 мөр байх ёстой, 8 мөр байна.` ба `2-р мөрөнд 9 утга байх ёстой` |
 
 ### 2.7 Хүлээгдсэн үр дүн
-`python3 tests/test_validator.py` нь `Ran 10 tests ... OK` гэж дуусна.
+`python3 tests/test_validator.py` нь `Ran 11 tests ... OK` гэж дуусна. `cd web && npm test` нь `tests 6, pass 6, fail 0` гэж дуусна.
 
 ### 2.8 Known issues
 - Python-ы GIL-ийн улмаас урсгалууд жинхэнэ зэрэгцээ тооцоолохгүй. Энэ нь зөв ажиллагаанд нөлөөлөхгүй.
+- Онлайн хувилбарын урсгал нь үйлдлийн системийн thread биш, хөтчийн Web Worker юм.
 - Сервер зөвхөн `127.0.0.1` дээр ажиллана (бусад компьютерээс хандах боломжгүй).
