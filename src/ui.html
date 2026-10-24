@@ -19,9 +19,40 @@ button,select,.filebtn{font-size:14px;padding:6px 12px}
 textarea{font-family:ui-monospace,Menlo,monospace;font-size:14px;width:240px;height:200px}
 .lg{display:inline-flex;align-items:center;gap:4px;font-size:13px;color:#666;margin-right:12px}
 .sw{width:12px;height:12px;border-radius:3px;display:inline-block}
-#th{min-width:300px;border:1px solid #ddd;border-radius:12px;padding:6px 0;background:#fff}
 .tr{display:flex;justify-content:space-between;gap:12px;font-size:14px;padding:5px 12px;border-bottom:1px solid #eee}
 .tr:last-child{border-bottom:0}
+.td{--blue:#5b8cff;--green:#3ecf6e;--red:#ff5d5d;--amber:#f0b050;margin-top:24px;padding:20px 16px 16px;border-radius:16px;background:#07080c;color:#e8ecf5;border:1px solid #1c2030}
+.td-title{text-align:center;font-size:22px;letter-spacing:.12em;margin:0 0 16px;font-weight:800}
+.td-parent{margin:0 auto;width:fit-content;max-width:100%;display:flex;align-items:center;gap:10px;padding:14px 22px;border-radius:12px;background:#0e111a;border:1px solid #2b3556;color:var(--blue);box-shadow:0 0 22px rgba(91,140,255,.2);flex-wrap:wrap;justify-content:center}
+.td-parent b{color:#fff;letter-spacing:.1em}.td-parent span{color:#8c97b8;font-size:13px}
+.td.run .td-parent{box-shadow:0 0 30px rgba(91,140,255,.45)}
+.td.ok .td-parent{border-color:var(--green);color:var(--green)}.td.err .td-parent{border-color:var(--red);color:var(--red)}
+.td-trunk{position:relative;height:34px;width:2px;margin:0 auto;background:repeating-linear-gradient(#2b3556 0 3px,transparent 3px 7px)}
+.td-trunk i{position:absolute;left:-3px;width:8px;height:8px;border-radius:50%;background:var(--blue);box-shadow:0 0 8px var(--blue);opacity:0}
+.td.run .td-trunk i{animation:td-down 1.2s linear infinite}.td.run .td-trunk i:nth-child(2){animation-delay:.4s}.td.run .td-trunk i:nth-child(3){animation-delay:.8s}
+.td-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:22px 12px;padding-top:8px;border-top:1px dotted #2b3556}
+.td-card{position:relative;padding:10px 12px;border-radius:10px;background:#0e111a;border:1px solid #1f2438;font-size:12px}
+.td-drop{position:absolute;top:-19px;left:50%;width:2px;height:18px;background:repeating-linear-gradient(#2b3556 0 3px,transparent 3px 6px)}
+.td-drop i{position:absolute;left:-3px;width:8px;height:8px;border-radius:50%;background:var(--blue);box-shadow:0 0 8px var(--blue);opacity:0}
+.td-card.run .td-drop i{animation:td-down-s .8s linear infinite}
+.td-head{display:flex;justify-content:space-between;align-items:center}
+.td-id{font-weight:700;color:#aab6d8;letter-spacing:.06em}
+.td-led{width:9px;height:9px;border-radius:50%;background:#444b63}
+.td-name{margin:4px 0 8px;color:#e8ecf5;font-size:13px;min-height:2.6em}
+.td-bar{height:6px;border-radius:3px;background:#1a1f31;overflow:hidden}.td-bar i{display:block;height:100%;width:0;background:var(--blue)}
+.td-state{margin-top:8px;color:#7d88a8}.td-meta{margin-top:2px;color:#566080;font-size:11px}
+.td-card.run{border-color:var(--amber);box-shadow:0 0 14px rgba(240,176,80,.25)}
+.td-card.run .td-led{background:var(--amber);animation:td-pulse .8s ease-in-out infinite}
+.td-card.run .td-bar i{width:60%;background:var(--amber);animation:td-fill 1s ease-in-out infinite alternate}
+.td-card.run .td-state{color:var(--amber)}
+.td-card.ok{border-color:#1f4a30}.td-card.ok .td-led{background:var(--green);box-shadow:0 0 8px var(--green)}
+.td-card.ok .td-bar i{width:100%;background:var(--green)}.td-card.ok .td-state{color:var(--green)}
+.td-card.err{border-color:var(--red);box-shadow:0 0 14px rgba(255,93,93,.25)}.td-card.err .td-led{background:var(--red);box-shadow:0 0 8px var(--red)}
+.td-card.err .td-bar i{width:100%;background:var(--red)}.td-card.err .td-state{color:var(--red);font-weight:700}
+@keyframes td-down{0%{top:0;opacity:0}15%{opacity:1}85%{opacity:1}100%{top:100%;opacity:0}}
+@keyframes td-down-s{0%{top:0;opacity:0}20%{opacity:1}100%{top:100%;opacity:0}}
+@keyframes td-pulse{50%{opacity:.35}}@keyframes td-fill{from{width:25%}to{width:90%}}
+@media (prefers-reduced-motion:reduce){.td *{animation:none!important}}
 #msg{font-size:15px;font-weight:600}
 #errs{color:#a32d2d;font-size:14px;margin:8px 0 0;padding-left:18px}
 .ok{color:#3b6d11}.err{color:#a32d2d}.run{color:#b26a00}.wait{color:#888}
@@ -92,7 +123,7 @@ table.info th{width:170px;color:#666}
   <li><b>Өгөгдөл сонгох:</b> жагсаалтаас тест сонгох, хүснэгтээ текст талбарт бичих эсвэл <i>Файл ачаалах</i>-аар .txt оруулах.</li>
   <li><b>Горим сонгох:</b> 11 урсгал (мөр, багана, 9 дэд хүснэгт) эсвэл 27 урсгал (бүлэг бүрт тусдаа). Хурдыг тохируулна.</li>
   <li><b>Ажиллуулах</b> дарах: ажил бүрийг сервер дээр тусдаа урсгал гүйцэтгэнэ.</li>
-  <li><b>Ажиглах:</b> самбар дээр шалгаж буй бүлэг өнгөөр тодорч, давхардсан нүд улаан болно. Баруун талд урсгал бүрийн төлөв <i>хүлээж буй → ажиллаж байна → OK/АЛДАА</i> өөрчлөгдөнө.</li>
+  <li><b>Ажиглах:</b> самбар дээр шалгаж буй бүлэг өнгөөр тодорч, давхардсан нүд улаан болно. Доор урсгал бүрийн төлөв <i>хүлээж буй → ажиллаж байна → OK/АЛДАА</i> өөрчлөгдөнө.</li>
 </ol>
 <div class="bar">
   <select id="sample" aria-label="Тестийн өгөгдөл"></select>
@@ -121,8 +152,8 @@ table.info th{width:170px;color:#666}
     </div>
     <ul id="errs"></ul>
   </div>
-  <div id="th"></div>
 </div>
+<div id="th"></div>
 </section>
 
 <section class="page prose" id="p-/about">
@@ -180,13 +211,34 @@ function drawBoard() {
 
 const label = {wait: 'хүлээж буй', run: 'ажиллаж байна', ok: 'OK', err: 'АЛДАА'};
 function drawThreads() {
+  const running = status.includes('run');
+  const finished = status.length > 0 && status.every(x => x === 'ok' || x === 'err');
+  const failed = status.includes('err');
+  const ps = running ? 'run' : finished ? (failed ? 'err' : 'ok') : 'wait';
+  const ptxt = {wait: 'Хүлээж байна', run: 'Ажил хуваарилж байна', ok: 'Бүх урсгал OK', err: 'Алдаа илэрсэн'}[ps];
+  th.className = 'td ' + ps;
   th.replaceChildren();
+  th.appendChild(el('h2', 'td-title', 'УРСГАЛУУД'));
+  const parent = el('div', 'td-parent');
+  parent.appendChild(el('b', '', 'ЭЦЭГ УРСГАЛ'));
+  parent.appendChild(el('span', '', `${ptxt} · ${threads.length} ажил`));
+  th.appendChild(parent);
+  const trunk = el('div', 'td-trunk');
+  for (let k = 0; k < 3; k++) trunk.appendChild(el('i'));
+  th.appendChild(trunk);
+  const grid = el('div', 'td-grid');
   threads.forEach((t, i) => {
-    const row = el('div', 'tr');
-    row.appendChild(el('span', '', t.name));
-    row.appendChild(el('span', status[i], label[status[i]]));
-    th.appendChild(row);
+    const [id, ...rest] = t.name.split(' ');
+    const card = el('div', 'td-card ' + status[i]);
+    const drop = el('span', 'td-drop'); drop.appendChild(el('i')); card.appendChild(drop);
+    const head = el('div', 'td-head'); head.appendChild(el('span', 'td-id', id)); head.appendChild(el('span', 'td-led')); card.appendChild(head);
+    card.appendChild(el('div', 'td-name', rest.join(' ')));
+    const bar = el('div', 'td-bar'); bar.appendChild(el('i')); card.appendChild(bar);
+    card.appendChild(el('div', 'td-state', label[status[i]]));
+    if (t.thread && status[i] !== 'wait') card.appendChild(el('div', 'td-meta', t.thread + (t.elapsed_ms !== undefined ? ` · ${t.elapsed_ms} мс` : '')));
+    grid.appendChild(card);
   });
+  th.appendChild(grid);
 }
 
 function placeholderThreads() {
