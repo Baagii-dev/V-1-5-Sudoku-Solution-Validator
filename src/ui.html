@@ -101,6 +101,48 @@ button.primary{background:#222;color:#fff;border:0;border-radius:6px;font-weight
 .boardpanel .g{grid-template-columns:repeat(9,46px)}
 .boardpanel .c{width:46px;height:46px;font-size:20px}
 @media (max-width:900px){.panel.input,.main{grid-template-columns:1fr}.stats{grid-template-columns:repeat(3,1fr)}.stat.big{grid-column:1/-1}.boardpanel{overflow-x:auto}}
+:root{--bg:#fafaf8;--fg:#222;--muted:#666;--card:#fff;--line:#ddd;--row:#e6f1fb;--col:#eaf3de;--box:#faeeda}
+a { color: inherit; }
+.wide { max-width: 1100px; }
+.hero { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(240px, 1fr); gap: 24px; align-items: center; padding: 32px; border: 1px solid var(--line); border-radius: 20px; background: var(--card); }
+.eyebrow { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; }
+.hero h1 { font-size: 34px; line-height: 1.15; margin: 0 0 12px; }
+.hero .lead { margin: 0 0 20px; }
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.ghost { padding: 8px 16px; border: 1px solid var(--line); border-radius: 6px; text-decoration: none; }
+.hero-card { background: #07080c; color: #e8ecf5; border: 1px solid #1c2030; border-radius: 16px; padding: 18px; display: grid; gap: 14px; }
+.hero-card .hc-top { text-align: center; padding: 10px; border: 1px solid #2b3556; border-radius: 10px; background: #0e111a; color: #5b8cff; font-weight: 700; letter-spacing: 0.1em; box-shadow: 0 0 18px rgba(91, 140, 255, 0.25); }
+.hero-card .hc-row { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+.hero-card .hc-row i { font-style: normal; font-size: 11px; padding: 4px 8px; border-radius: 6px; background: #0e111a; border: 1px solid #1f4a30; color: #3ecf6e; }
+.hero-card .hc-row i.bad { border-color: #ff5d5d; color: #ff5d5d; }
+.hero-card .hc-note { font-size: 12px; color: #7d88a8; text-align: center; }
+.sec { margin-top: 36px; }
+.sec h2 { font-size: 20px; margin: 0 0 14px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+.card { border: 1px solid var(--line); border-radius: 14px; background: var(--card); padding: 16px 18px; }
+.card .k { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+.card .v { font-weight: 600; }
+.card .big { font-size: 30px; font-weight: 800; line-height: 1; margin-bottom: 8px; }
+.card p { margin: 6px 0 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
+.flow { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; counter-reset: s; }
+.flow li { counter-increment: s; border: 1px solid var(--line); border-radius: 14px; background: var(--card); padding: 16px 18px 16px 18px; position: relative; font-size: 14px; line-height: 1.5; }
+.flow li::before { content: counter(s); display: flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; background: var(--row); font-weight: 700; margin-bottom: 8px; }
+.compare { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+.compare .card h3 { margin: 0 0 6px; font-size: 16px; }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag { padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); font-size: 13px; }
+.band { margin-top: 36px; padding: 24px; border-radius: 16px; background: var(--row); display: flex; gap: 16px; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+.band b { font-size: 18px; }
+.team { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.member { display: flex; gap: 16px; align-items: center; padding: 20px; border: 1px solid var(--line); border-radius: 16px; background: var(--card); }
+.member .avatar { width: 64px; height: 64px; font-size: 26px; }
+.member b { font-size: 18px; }
+.linkgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.linkgrid a { display: block; padding: 16px 18px; border: 1px solid var(--line); border-radius: 14px; background: var(--card); text-decoration: none; }
+.linkgrid a:hover { background: var(--row); }
+.linkgrid a b { display: block; margin-bottom: 4px; }
+.linkgrid a span { color: var(--muted); font-size: 13px; }
+@media (max-width: 800px) { .hero { grid-template-columns: 1fr; padding: 20px; } .hero h1 { font-size: 28px; } }
 </style>
 </head>
 <body>
@@ -113,32 +155,65 @@ button.primary{background:#222;color:#fff;border:0;border-radius:6px;font-weight
   </nav>
 </header>
 
-<section class="page prose" id="p-/">
-  <h1>Sudoku Solution Validator</h1>
-  <p class="lead">9x9 Sudoku хүснэгтийн шийд зөв эсэхийг олон урсгалаар шалгадаг хичээлийн бие даалтын төсөл.</p>
+<section class="page wide" id="p-/">
+<section class="hero">
+  <div>
+    <p class="eyebrow">F.CSM302 · Бие даалт 1 · V-1-5</p>
+    <h1>Sudoku Solution Validator</h1>
+    <p class="lead">9x9 Sudoku хүснэгтийн шийд зөв эсэхийг олон урсгалаар шалгадаг хичээлийн бие даалтын төсөл. Мөр, багана, 3x3 дэд хүснэгт бүрийг тусдаа урсгал шалгаж, эцэг урсгал үр дүнг нэгтгэнэ.</p>
+    <div class="hero-actions">
+      <a class="cta" href="#/validator">Шалгагчийг ажиллуулах →</a>
+      <a class="ghost" href="https://github.com/Baagii-dev/V-1-5-Sudoku-Solution-Validator" target="_blank" rel="noreferrer">GitHub эх код</a>
+    </div>
+  </div>
+  <div class="hero-card" aria-hidden="true">
+    <div class="hc-top">ЭЦЭГ УРСГАЛ</div>
+    <div class="hc-row"><i>T1 Мөр</i><i>T2 Багана</i><i>T3 Дэд 1</i><i class="bad">T4 Дэд 2</i><i>T5 Дэд 3</i><i>T6 Дэд 4</i><i>T7 Дэд 5</i></div>
+    <div class="hc-note">11 эсвэл 27 урсгал зэрэг ажиллана</div>
+  </div>
+</section>
+
+<section class="sec">
   <h2>Даалгавар</h2>
-  <table class="info"><tbody>
-    <tr><th>Хичээл</th><td>F.CSM302 Үйлдлийн систем, Бие даалт 1</td></tr>
-    <tr><th>Хуваарилалтын код</th><td>V-1-5</td></tr>
-    <tr><th>Сурах бичиг</th><td>Operating System Concepts (2018), Бүлэг 4 – Threads &amp; Concurrency, Programming Project</td></tr>
-    <tr><th>UI дүрслэл</th><td>Sudoku board</td></tr>
-  </tbody></table>
+  <div class="cards">
+    <div class="card"><div class="k">Хичээл</div><div class="v">F.CSM302 Үйлдлийн систем, Бие даалт 1</div></div>
+    <div class="card"><div class="k">Хуваарилалтын код</div><div class="v">V-1-5</div></div>
+    <div class="card"><div class="k">Сурах бичиг</div><div class="v">Operating System Concepts (2018), Бүлэг 4 – Threads &amp; Concurrency, Programming Project</div></div>
+    <div class="card"><div class="k">UI дүрслэл</div><div class="v">Sudoku board</div></div>
+  </div>
+</section>
+
+<section class="sec">
   <h2>Шаардлага</h2>
-  <ul>
-    <li>Мөр бүрийг шалгах нэг урсгал, багана бүрийг шалгах нэг урсгал.</li>
-    <li>3x3 дэд хүснэгт бүрийг шалгах есөн урсгал (нийт <b>11 урсгал</b>).</li>
-    <li>Эцэг урсгал хүснэгтийг урсгалуудад дамжуулж, бүгдийг нь хүлээн (join) үр дүнг нэгтгэнэ.</li>
-    <li>Сонголт: мөр, багана, дэд хүснэгт бүрт тусдаа урсгал (<b>27 урсгал</b>). Хоёр горимыг хоёуланг нь дэмжинэ.</li>
-  </ul>
+  <div class="cards">
+    <div class="card"><div class="big">11</div><div class="v">урсгалтай горим</div><p>Мөр бүрийг шалгах 1, багана бүрийг шалгах 1, 3x3 дэд хүснэгт бүрийг шалгах 9 урсгал.</p></div>
+    <div class="card"><div class="big">27</div><div class="v">урсгалтай горим</div><p>Мөр, багана, дэд хүснэгт тус бүрт тусдаа урсгал (сонголтоор). Хоёр горимыг хоёуланг нь дэмжинэ.</p></div>
+    <div class="card"><div class="big">join</div><div class="v">Эцэг урсгал нэгтгэнэ</div><p>Эцэг урсгал хүснэгтийг дамжуулж, бүх урсгалыг хүлээн үр дүнг нэгтгэнэ.</p></div>
+  </div>
+</section>
+
+<section class="sec">
   <h2>Хэрхэн ажилладаг вэ</h2>
-  <ol>
+  <ol class="flow">
     <li>Оролтын текстийг 9x9 хүснэгт болгон уншиж, алдааг мөр, баганаар нь тэмдэглэнэ.</li>
-    <li>Бүлэг бүрийн (мөр, багана, дэд хүснэгт) 9 нүдэнд давхардал эсвэл 1–9-өөс гадуур утга байгааг шалгана.</li>
+    <li>Бүлэг бүрийн 9 нүдэнд давхардал эсвэл 1–9-өөс гадуур утга байгааг шалгана.</li>
     <li>Урсгал бүр хүснэгтийг зөвхөн уншиж, үр дүнгээ өөрийн нүдэнд бичдэг тул lock хэрэггүй.</li>
-    <li>Эцэг урсгал бүх урсгалыг хүлээж, нэгтгэсэн дүгнэлт (<i>Зөв / Буруу шийд</i>) гаргана.</li>
+    <li>Эцэг урсгал бүгдийг хүлээж, нэгтгэсэн дүгнэлт (Зөв / Буруу шийд) гаргана.</li>
   </ol>
-  <p class="notebox">Энэ хувилбарт урсгал бүр Python-ы <code>threading</code> урсгал бөгөөд сервер дээр ажиллана.</p>
-  <p><a class="cta" href="#/validator">Шалгагчийг ажиллуулах →</a></p>
+</section>
+
+<section class="sec">
+  <h2>Хоёр хувилбар</h2>
+  <div class="compare">
+    <div class="card"><h3>Python хувилбар</h3><p>Python-ы <code>threading</code> буюу үйлдлийн системийн жинхэнэ урсгал ашиглана. Сервер (<code>python3 src/app.py</code>) дээр шалгалт хийгдэнэ. Даалгаварт тавигдсан үндсэн хэрэгжүүлэлт.</p></div>
+    <div class="card"><h3>Онлайн хувилбар</h3><p>React болон хөтчийн Web Worker урсгал ашиглана. Суулгах, татах шаардлагагүй, линкээр шууд нээгдэнэ (GitHub Pages).</p></div>
+  </div>
+</section>
+
+<div class="band">
+  <b>Бэлэн үү? Тестийн өгөгдлөөр эсвэл өөрийн хүснэгтээр шалгаж үзээрэй.</b>
+  <a class="cta" href="#/validator">Шалгагч руу очих →</a>
+</div>
 </section>
 
 <section class="page" id="p-/validator">
@@ -201,17 +276,56 @@ button.primary{background:#222;color:#fff;border:0;border-radius:6px;font-weight
 </div>
 </section>
 
-<section class="page prose" id="p-/about">
-  <h1>Бидний тухай</h1>
-  <p class="lead">F.CSM302 Үйлдлийн систем хичээлийн Бие даалт 1, хуваарилалтын код V-1-5.</p>
+<section class="page wide" id="p-/about">
+<section class="hero">
+  <div>
+    <p class="eyebrow">Бидний тухай</p>
+    <h1>Баг ба төсөл</h1>
+    <p class="lead">F.CSM302 Үйлдлийн систем хичээлийн Бие даалт 1, хуваарилалтын код V-1-5. Sudoku шийдийг олон урсгалаар шалгах программыг хоёр хэлбэрээр хэрэгжүүлсэн.</p>
+  </div>
+  <div class="hero-card" aria-hidden="true">
+    <div class="hc-top">V-1-5</div>
+    <div class="hc-row"><i>Python threading</i><i>Web Worker</i><i>11 урсгал</i><i>27 урсгал</i></div>
+    <div class="hc-note">Operating System Concepts, Бүлэг 4</div>
+  </div>
+</section>
+
+<section class="sec">
   <h2>Багийн гишүүд</h2>
-  <ul class="members">
-    <li><span class="avatar" aria-hidden="true">О</span><span><b>О.Батцэцэг</b><br><span class="muted">B241940010</span></span></li>
-    <li><span class="avatar" aria-hidden="true">А</span><span><b>А.Пүрэвдэмбэрэл</b><br><span class="muted">B242270090</span></span></li>
-  </ul>
-  <h2>Төслийн тухай</h2>
-  <p>Sudoku шийдийг олон урсгалаар шалгах программыг Python (үйлдлийн системийн урсгал) болон онлайн хувилбар (React, Web Worker) гэсэн хоёр хэлбэрээр хэрэгжүүлсэн.</p>
-  <p><a href="https://github.com/Baagii-dev/V-1-5-Sudoku-Solution-Validator" target="_blank" rel="noreferrer">GitHub репозитори</a></p>
+  <div class="team">
+    <div class="member"><span class="avatar" aria-hidden="true">О</span><span><b>О.Батцэцэг</b><br><span class="muted">B241940010</span></span></div>
+    <div class="member"><span class="avatar" aria-hidden="true">А</span><span><b>А.Пүрэвдэмбэрэл</b><br><span class="muted">B242270090</span></span></div>
+  </div>
+</section>
+
+<section class="sec">
+  <h2>Төслийн тоон үзүүлэлт</h2>
+  <div class="cards">
+    <div class="card"><div class="big">2</div><div class="v">хувилбар</div><p>Python (OS урсгал) ба онлайн (Web Worker).</p></div>
+    <div class="card"><div class="big">11 / 27</div><div class="v">урсгалын горим</div><p>Хоёр горим ижил дүгнэлт өгдөг.</p></div>
+    <div class="card"><div class="big">17</div><div class="v">автомат тест</div><p>Python 11, JavaScript 6. Windows, macOS, Linux дээр CI-аар шалгагддаг.</p></div>
+    <div class="card"><div class="big">8</div><div class="v">тестийн өгөгдөл</div><p>Зөв, мөр/багана/дэд хүснэгтийн алдаа, буруу оролт.</p></div>
+  </div>
+</section>
+
+<section class="sec">
+  <h2>Ашигласан технологи</h2>
+  <div class="tags">
+    <span class="tag">Python 3 · threading</span><span class="tag">http.server</span><span class="tag">unittest</span>
+    <span class="tag">React</span><span class="tag">Vite</span><span class="tag">Web Worker</span>
+    <span class="tag">GitHub Actions</span><span class="tag">GitHub Pages</span>
+  </div>
+</section>
+
+<section class="sec">
+  <h2>Холбоосууд</h2>
+  <div class="linkgrid">
+    <a href="https://github.com/Baagii-dev/V-1-5-Sudoku-Solution-Validator" target="_blank" rel="noreferrer"><b>GitHub репозитори</b><span>Эх код, Python хувилбар, тест</span></a>
+    <a href="https://baagii-dev.github.io/V-1-5-Sudoku-Solution-Validator/" target="_blank" rel="noreferrer"><b>Онлайн хувилбар</b><span>Суулгахгүйгээр шууд ажиллуулах</span></a>
+    <a href="https://github.com/Baagii-dev/V-1-5-Sudoku-Solution-Validator/blob/main/docs/Manual.md" target="_blank" rel="noreferrer"><b>Manual</b><span>Хэрэглэгчийн ба operational заавар</span></a>
+    <a href="https://github.com/Baagii-dev/V-1-5-Sudoku-Solution-Validator/blob/main/docs/Report.md" target="_blank" rel="noreferrer"><b>Тайлан</b><span>Зохиомж, туршилт, дүгнэлт</span></a>
+  </div>
+</section>
 </section>
 
 <script>
