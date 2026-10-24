@@ -1,6 +1,7 @@
 """Ажиллуулах: python -m unittest discover -s tests -t . -v  (эсвэл: python tests/test_validator.py)"""
 
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -63,6 +64,13 @@ class ValidatorTests(unittest.TestCase):
 
         with self.assertRaises(SudokuInputError):
             parse_board("")
+
+    def test_windows_bom_and_crlf(self):
+        text = (ROOT / "valid_book.txt").read_text(encoding="utf-8").replace("\r\n", "\n").replace("\n", "\r\n")
+        with tempfile.TemporaryDirectory() as d:
+            f = Path(d) / "win.txt"
+            f.write_bytes(b"\xef\xbb\xbf" + text.encode("utf-8"))
+            self.assertTrue(validate(load_board(f))["valid"])
 
     def test_bad_mode(self):
         with self.assertRaises(ValueError):

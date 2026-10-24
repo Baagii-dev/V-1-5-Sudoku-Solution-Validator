@@ -112,6 +112,7 @@ def _print_report(path, report):
 
 
 def main(argv):
+    sys.stdout.reconfigure(encoding="utf-8")  # Windows консол/файлд кирилл үсэг алдахгүй
     mode = 11
     paths = []
     for a in argv:

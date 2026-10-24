@@ -33,7 +33,7 @@ class Handler(BaseHTTPRequestHandler):
         if path in ("/", "/index.html"):
             self._send(200, (HERE / "ui.html").read_bytes(), "text/html; charset=utf-8")
         elif path == "/api/samples":
-            samples = [{"name": p.name, "text": p.read_text(encoding="utf-8")} for p in sorted(TESTS.glob("*.txt"))]
+            samples = [{"name": p.name, "text": p.read_text(encoding="utf-8-sig")} for p in sorted(TESTS.glob("*.txt"))]
             self._send(200, samples)
         else:
             self._send(404, {"error": "Олдсонгүй"})
@@ -68,6 +68,7 @@ class Handler(BaseHTTPRequestHandler):
 
 
 def main(argv):
+    sys.stdout.reconfigure(encoding="utf-8")
     port = 8000
     open_browser = True
     for a in argv:

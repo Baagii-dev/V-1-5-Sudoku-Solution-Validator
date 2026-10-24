@@ -44,7 +44,7 @@ def parse_board(text):
 def load_board(path):
     """Файлаас хүснэгт уншина."""
     try:
-        with open(path, encoding="utf-8") as f:
+        with open(path, encoding="utf-8-sig") as f:
             return parse_board(f.read())
     except FileNotFoundError:
         raise SudokuInputError([(None, None, f"Файл олдсонгүй: {path}")]) from None
@@ -55,6 +55,7 @@ def load_board(path):
 if __name__ == "__main__":
     import sys
 
+    sys.stdout.reconfigure(encoding="utf-8")
     for path in sys.argv[1:]:
         try:
             load_board(path)
