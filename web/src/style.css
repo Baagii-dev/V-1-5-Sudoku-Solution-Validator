@@ -59,3 +59,48 @@ a { color: inherit; }
 .members li { display: flex; gap: 12px; align-items: center; border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; background: var(--card); }
 .avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--col); display: flex; align-items: center; justify-content: center; font-weight: 700; }
 .muted { color: var(--muted); font-size: 13px; }
+
+/* Урсгалын диаграм (харанхуй, гэрэлтэй загвар) */
+.td { --blue: #5b8cff; --green: #3ecf6e; --red: #ff5d5d; --amber: #f0b050; margin-top: 24px; padding: 20px 16px 16px; border-radius: 16px; background: #07080c; color: #e8ecf5; border: 1px solid #1c2030; }
+.td-title { text-align: center; font-size: 22px; letter-spacing: 0.12em; margin: 0 0 16px; font-weight: 800; }
+.td-parent { margin: 0 auto; width: fit-content; max-width: 100%; display: flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 12px; background: #0e111a; border: 1px solid #2b3556; color: var(--blue); box-shadow: 0 0 22px rgba(91, 140, 255, 0.2); flex-wrap: wrap; justify-content: center; }
+.td-parent b { color: #fff; letter-spacing: 0.1em; }
+.td-parent span { color: #8c97b8; font-size: 13px; }
+.td.run .td-parent { box-shadow: 0 0 30px rgba(91, 140, 255, 0.45); }
+.td.ok .td-parent { border-color: var(--green); color: var(--green); }
+.td.err .td-parent { border-color: var(--red); color: var(--red); }
+.td-trunk { position: relative; height: 34px; width: 2px; margin: 0 auto; background: repeating-linear-gradient(#2b3556 0 3px, transparent 3px 7px); }
+.td-trunk i { position: absolute; left: -3px; width: 8px; height: 8px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 8px var(--blue); opacity: 0; }
+.td.run .td-trunk i { animation: td-down 1.2s linear infinite; }
+.td.run .td-trunk i:nth-child(2) { animation-delay: 0.4s; }
+.td.run .td-trunk i:nth-child(3) { animation-delay: 0.8s; }
+.td-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(128px, 1fr)); gap: 22px 12px; padding-top: 8px; border-top: 1px dotted #2b3556; position: relative; }
+.td-card { position: relative; padding: 10px 12px; border-radius: 10px; background: #0e111a; border: 1px solid #1f2438; font-size: 12px; }
+.td-drop { position: absolute; top: -19px; left: 50%; width: 2px; height: 18px; background: repeating-linear-gradient(#2b3556 0 3px, transparent 3px 6px); }
+.td-drop i { position: absolute; left: -3px; width: 8px; height: 8px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 8px var(--blue); opacity: 0; }
+.td-card.run .td-drop i { animation: td-down-s 0.8s linear infinite; }
+.td-head { display: flex; justify-content: space-between; align-items: center; }
+.td-id { font-weight: 700; color: #aab6d8; letter-spacing: 0.06em; }
+.td-led { width: 9px; height: 9px; border-radius: 50%; background: #444b63; }
+.td-name { margin: 4px 0 8px; color: #e8ecf5; font-size: 13px; min-height: 2.6em; }
+.td-bar { height: 6px; border-radius: 3px; background: #1a1f31; overflow: hidden; }
+.td-bar i { display: block; height: 100%; width: 0; background: var(--blue); }
+.td-state { margin-top: 8px; color: #7d88a8; }
+.td-meta { margin-top: 2px; color: #566080; font-size: 11px; }
+.td-card.run { border-color: var(--amber); box-shadow: 0 0 14px rgba(240, 176, 80, 0.25); }
+.td-card.run .td-led { background: var(--amber); animation: td-pulse 0.8s ease-in-out infinite; }
+.td-card.run .td-bar i { width: 60%; background: var(--amber); animation: td-fill 1s ease-in-out infinite alternate; }
+.td-card.run .td-state { color: var(--amber); }
+.td-card.ok { border-color: #1f4a30; }
+.td-card.ok .td-led { background: var(--green); box-shadow: 0 0 8px var(--green); }
+.td-card.ok .td-bar i { width: 100%; background: var(--green); }
+.td-card.ok .td-state { color: var(--green); }
+.td-card.err { border-color: var(--red); box-shadow: 0 0 14px rgba(255, 93, 93, 0.25); }
+.td-card.err .td-led { background: var(--red); box-shadow: 0 0 8px var(--red); }
+.td-card.err .td-bar i { width: 100%; background: var(--red); }
+.td-card.err .td-state { color: var(--red); font-weight: 700; }
+@keyframes td-down { 0% { top: 0; opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+@keyframes td-down-s { 0% { top: 0; opacity: 0; } 20% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+@keyframes td-pulse { 50% { opacity: 0.35; } }
+@keyframes td-fill { from { width: 25%; } to { width: 90%; } }
+@media (prefers-reduced-motion: reduce) { .td * { animation: none !important; } }

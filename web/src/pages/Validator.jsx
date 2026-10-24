@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Board from '../components/Board.jsx';
-import ThreadList from '../components/ThreadList.jsx';
+import ThreadDiagram from '../components/ThreadDiagram.jsx';
 import { parseBoard, SIZE } from '../core/parseBoard.js';
 import { buildTasks } from '../core/tasks.js';
 import { validate } from '../core/validate.js';
@@ -208,8 +208,8 @@ export default function Validator() {
             </ul>
           )}
         </div>
-        <ThreadList threads={threads} status={status} />
       </div>
+      <ThreadDiagram threads={threads} status={status} results={run?.threads} />
     </div>
   );
 }
