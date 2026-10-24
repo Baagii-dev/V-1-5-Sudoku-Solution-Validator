@@ -53,7 +53,7 @@ textarea{font-family:ui-monospace,Menlo,monospace;font-size:14px;width:240px;hei
 @keyframes td-down-s{0%{top:0;opacity:0}20%{opacity:1}100%{top:100%;opacity:0}}
 @keyframes td-pulse{50%{opacity:.35}}@keyframes td-fill{from{width:25%}to{width:90%}}
 @media (prefers-reduced-motion:reduce){.td *{animation:none!important}}
-#msg{font-size:15px;font-weight:600}
+
 #errs{color:#a32d2d;font-size:14px;margin:8px 0 0;padding-left:18px}
 .ok{color:#3b6d11}.err{color:#a32d2d}.run{color:#b26a00}.wait{color:#888}
 header.top{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:-24px -24px 20px;padding:12px 24px;border-bottom:1px solid #ddd;background:#fff}
@@ -77,6 +77,30 @@ table.info th{width:170px;color:#666}
 .members li{display:flex;gap:12px;align-items:center;border:1px solid #ddd;border-radius:12px;padding:12px 16px;background:#fff}
 .avatar{width:40px;height:40px;border-radius:50%;background:#eaf3de;display:flex;align-items:center;justify-content:center;font-weight:700}
 .muted{color:#666;font-size:13px}
+h1{margin:0}
+.vpage{display:grid;gap:16px}
+.vhead{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.chips{list-style:none;display:flex;gap:8px;flex-wrap:wrap;margin:0;padding:0;font-size:13px;color:#666}
+.chips li{display:flex;gap:6px;align-items:center;border:1px solid #ddd;border-radius:999px;padding:4px 12px 4px 4px;background:#fff}
+.chips b{width:20px;height:20px;border-radius:50%;background:#e6f1fb;color:#222;display:flex;align-items:center;justify-content:center;font-size:12px}
+.panel{border:1px solid #ddd;border-radius:16px;background:#fff;padding:18px}
+.ptitle{font-size:15px;margin:0 0 12px}
+.panel.input{display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,300px);gap:24px;align-items:start}
+.controls{display:grid;gap:12px}
+.fld{display:grid;gap:4px;font-size:13px;color:#666}.fld select{width:100%}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+button.primary{background:#222;color:#fff;border:0;border-radius:6px;font-weight:600;cursor:pointer;padding:8px 18px}
+.editor textarea{width:100%;height:190px;resize:vertical}
+.note{font-size:12px;color:#666;margin-top:4px}
+.stats{display:grid;grid-template-columns:2fr repeat(5,1fr);gap:12px}
+.stat{border:1px solid #ddd;border-radius:12px;background:#fff;padding:12px 16px;display:grid;gap:2px}
+.stat span{font-size:12px;color:#666}.stat b{font-size:22px}.stat.big b{font-size:24px}
+.stat.ok b{color:#3b6d11}.stat.err b{color:#a32d2d}
+.main{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px;align-items:start}
+.main .td{margin-top:0}
+.boardpanel .g{grid-template-columns:repeat(9,46px)}
+.boardpanel .c{width:46px;height:46px;font-size:20px}
+@media (max-width:900px){.panel.input,.main{grid-template-columns:1fr}.stats{grid-template-columns:repeat(3,1fr)}.stat.big{grid-column:1/-1}.boardpanel{overflow-x:auto}}
 </style>
 </head>
 <body>
@@ -118,42 +142,63 @@ table.info th{width:170px;color:#666}
 </section>
 
 <section class="page" id="p-/validator">
-<h1>Шалгагчийг ажиллуулах</h1>
-<ol class="steps">
-  <li><b>Өгөгдөл сонгох:</b> жагсаалтаас тест сонгох, хүснэгтээ текст талбарт бичих эсвэл <i>Файл ачаалах</i>-аар .txt оруулах.</li>
-  <li><b>Горим сонгох:</b> 11 урсгал (мөр, багана, 9 дэд хүснэгт) эсвэл 27 урсгал (бүлэг бүрт тусдаа). Хурдыг тохируулна.</li>
-  <li><b>Ажиллуулах</b> дарах: ажил бүрийг сервер дээр тусдаа урсгал гүйцэтгэнэ.</li>
-  <li><b>Ажиглах:</b> самбар дээр шалгаж буй бүлэг өнгөөр тодорч, давхардсан нүд улаан болно. Доор урсгал бүрийн төлөв <i>хүлээж буй → ажиллаж байна → OK/АЛДАА</i> өөрчлөгдөнө.</li>
-</ol>
-<div class="bar">
-  <select id="sample" aria-label="Тестийн өгөгдөл"></select>
-  <select id="mode" aria-label="Урсгалын горим">
-    <option value="11">11 урсгал (мөр, багана, 9 дэд хүснэгт)</option>
-    <option value="27">27 урсгал (мөр, багана, дэд хүснэгт бүр)</option>
-  </select>
-  <label>Хурд <select id="speed"><option value="900">удаан</option><option value="450" selected>дунд</option><option value="120">хурдан</option><option value="0">шууд</option></select></label>
-  <label class="filebtn" title="9 мөртэй .txt файл">Файл ачаалах<input type="file" id="file" accept=".txt,text/plain" hidden></label>
-  <button id="run">▶ Ажиллуулах</button>
-  <button id="rst">⟲ Reset</button>
-  <span id="msg"></span>
-</div>
-<div class="wrap">
-  <div>
-    <textarea id="input" spellcheck="false" aria-label="Sudoku хүснэгт"></textarea>
-    <div style="font-size:12px;color:#666;margin-top:4px">9 мөр, мөр бүрд 9 тоо (1–9).<br>Өөрөө засаж болно.</div>
+<div class="vpage">
+  <div class="vhead">
+    <h1>Шалгагчийг ажиллуулах</h1>
+    <ol class="chips">
+      <li><b>1</b> Өгөгдөл сонгох</li>
+      <li><b>2</b> Горим сонгох</li>
+      <li><b>3</b> Ажиллуулах</li>
+      <li><b>4</b> Ажиглах</li>
+    </ol>
   </div>
-  <div>
-    <div class="g" id="g"></div>
-    <div style="margin-top:8px">
-      <span class="lg"><span class="sw" style="background:#e6f1fb"></span>Мөр шалгаж байна</span>
-      <span class="lg"><span class="sw" style="background:#eaf3de"></span>Багана</span>
-      <span class="lg"><span class="sw" style="background:#faeeda"></span>Дэд хүснэгт</span>
-      <span class="lg"><span class="sw" style="background:#fcebeb"></span>Давхардсан / алдаатай</span>
+
+  <section class="panel input">
+    <div class="controls">
+      <label class="fld"><span>Тестийн өгөгдөл</span><select id="sample" aria-label="Тестийн өгөгдөл"></select></label>
+      <label class="fld"><span>Урсгалын горим</span>
+        <select id="mode" aria-label="Урсгалын горим">
+          <option value="11">11 урсгал (мөр, багана, 9 дэд хүснэгт)</option>
+          <option value="27">27 урсгал (мөр, багана, дэд хүснэгт бүр)</option>
+        </select></label>
+      <label class="fld"><span>Хурд</span>
+        <select id="speed"><option value="900">удаан</option><option value="450" selected>дунд</option><option value="120">хурдан</option><option value="0">шууд</option></select></label>
+      <div class="actions">
+        <button id="run" class="primary">▶ Ажиллуулах</button>
+        <button id="rst">⟲ Reset</button>
+        <label class="filebtn" title="9 мөртэй .txt файл">Файл ачаалах<input type="file" id="file" accept=".txt,text/plain" hidden></label>
+      </div>
     </div>
-    <ul id="errs"></ul>
+    <div class="editor">
+      <textarea id="input" spellcheck="false" aria-label="Sudoku хүснэгт"></textarea>
+      <div class="note">9 мөр, мөр бүрд 9 тоо (1–9). Өөрөө засаж болно.</div>
+    </div>
+  </section>
+
+  <div class="stats">
+    <div class="stat big"><span>Дүгнэлт</span><b id="msg">—</b></div>
+    <div class="stat"><span>Урсгал</span><b id="st-thr">—</b></div>
+    <div class="stat ok"><span>OK</span><b id="st-ok">0</b></div>
+    <div class="stat err"><span>АЛДАА</span><b id="st-err">0</b></div>
+    <div class="stat"><span>Давхардсан нүд</span><b id="st-bad">—</b></div>
+    <div class="stat"><span>Нийт хугацаа</span><b id="st-ms">—</b></div>
+  </div>
+
+  <div class="main">
+    <section class="panel boardpanel">
+      <h2 class="ptitle">Sudoku самбар</h2>
+      <div class="g" id="g"></div>
+      <div style="margin-top:8px">
+        <span class="lg"><span class="sw" style="background:#e6f1fb"></span>Мөр шалгаж байна</span>
+        <span class="lg"><span class="sw" style="background:#eaf3de"></span>Багана</span>
+        <span class="lg"><span class="sw" style="background:#faeeda"></span>Дэд хүснэгт</span>
+        <span class="lg"><span class="sw" style="background:#fcebeb"></span>Давхардсан / алдаатай</span>
+      </div>
+      <ul id="errs"></ul>
+    </section>
+    <div id="th"></div>
   </div>
 </div>
-<div id="th"></div>
 </section>
 
 <section class="page prose" id="p-/about">
@@ -196,6 +241,7 @@ let timer = null, board = null, bad = new Set(), cur = null, threads = [], statu
 function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e; }
 
 function drawBoard() {
+  $('st-bad').textContent = threads.length && threads.some(t => t.groups) ? bad.size : '—';
   g.replaceChildren();
   for (let r = 0; r < 9; r++) for (let c = 0; c < 9; c++) {
     const d = el('div', 'c', board ? board[r][c] : '');
@@ -211,6 +257,9 @@ function drawBoard() {
 
 const label = {wait: 'хүлээж буй', run: 'ажиллаж байна', ok: 'OK', err: 'АЛДАА'};
 function drawThreads() {
+  $('st-thr').textContent = threads.length || '—';
+  $('st-ok').textContent = status.filter(x => x === 'ok').length;
+  $('st-err').textContent = status.filter(x => x === 'err').length;
   const running = status.includes('run');
   const finished = status.length > 0 && status.every(x => x === 'ok' || x === 'err');
   const failed = status.includes('err');
@@ -257,7 +306,7 @@ function placeholderThreads() {
 function reset() {
   clearInterval(timer); timer = null;
   board = null; bad = new Set(); cur = null; threads = []; status = []; errCells = new Set();
-  msg.textContent = ''; msg.className = ''; errs.replaceChildren();
+  msg.textContent = '—'; msg.className = ''; $('st-ms').textContent = '—'; errs.replaceChildren();
   placeholderThreads(); parseLocal(); drawBoard(); drawThreads();
 }
 
@@ -277,6 +326,7 @@ function showInputErrors(list) {
 async function run() {
   reset();
   let data;
+  const t0 = performance.now();
   try {
     const res = await fetch('/api/validate', {method: 'POST', headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({board: input.value, mode: Number($('mode').value)})});
@@ -285,6 +335,7 @@ async function run() {
   } catch (e) {
     msg.textContent = 'Сервертэй холбогдож чадсангүй (python src/app.py ажиллаж байгаа эсэхийг шалгана уу)'; msg.className = 'err'; return;
   }
+  $('st-ms').textContent = Math.round((performance.now() - t0) * 10) / 10 + ' мс';
   board = data.board; threads = data.threads; status = threads.map(() => 'wait');
   const steps = [];
   threads.forEach((t, ti) => t.groups.forEach((gr, gi) => steps.push({ti, gi, last: gi === t.groups.length - 1})));
@@ -323,7 +374,7 @@ async function init() {
   if (q.get('autorun') === '1') run();
 }
 $('sample').onchange = () => { input.value = $('sample').value; reset(); };
-input.oninput = () => { clearInterval(timer); bad = new Set(); cur = null; threads = []; status = []; errCells = new Set(); board = null; msg.textContent = ''; errs.replaceChildren(); placeholderThreads(); parseLocal(); drawBoard(); drawThreads(); };
+input.oninput = () => { clearInterval(timer); bad = new Set(); cur = null; threads = []; status = []; errCells = new Set(); board = null; msg.textContent = '—'; msg.className = ''; $('st-ms').textContent = '—'; errs.replaceChildren(); placeholderThreads(); parseLocal(); drawBoard(); drawThreads(); };
 $('file').onchange = async e => {
   const f = e.target.files[0]; if (!f) return;
   input.value = await f.text(); e.target.value = ''; input.oninput();
