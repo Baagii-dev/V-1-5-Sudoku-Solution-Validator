@@ -16,3 +16,7 @@ venv/
 *.swp
 
 .claude/
+
+# Node / web build
+node_modules/
+web/dist/
