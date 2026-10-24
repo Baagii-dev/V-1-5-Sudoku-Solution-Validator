@@ -25,11 +25,75 @@ textarea{font-family:ui-monospace,Menlo,monospace;font-size:14px;width:240px;hei
 #msg{font-size:15px;font-weight:600}
 #errs{color:#a32d2d;font-size:14px;margin:8px 0 0;padding-left:18px}
 .ok{color:#3b6d11}.err{color:#a32d2d}.run{color:#b26a00}.wait{color:#888}
+header.top{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:-24px -24px 20px;padding:12px 24px;border-bottom:1px solid #ddd;background:#fff}
+header.top .brand{font-weight:700;color:#222;text-decoration:none}
+header.top .brand span{color:#777;font-weight:400;margin-left:4px}
+header.top nav{display:flex;gap:4px}
+header.top nav a{color:#222;text-decoration:none;padding:6px 12px;border-radius:6px;font-size:14px}
+header.top nav a:hover,header.top nav a.on{background:#e6f1fb}
+header.top nav a.on{font-weight:600}
+.page{display:none}.page.on{display:block}
+.prose{max-width:760px;line-height:1.6}
+.prose h1{font-size:26px}.prose h2{font-size:18px;margin:28px 0 8px}
+.lead{font-size:17px;color:#555;margin-top:0}
+table.info{border-collapse:collapse;width:100%;font-size:14px}
+table.info th,table.info td{text-align:left;padding:8px 12px;border-bottom:1px solid #ddd;vertical-align:top}
+table.info th{width:170px;color:#666}
+.notebox{background:#e6f1fb;border-radius:8px;padding:10px 14px;font-size:14px}
+.cta{display:inline-block;background:#222;color:#fff;padding:8px 16px;border-radius:6px;text-decoration:none;margin-right:12px}
+.steps{color:#555;font-size:14px;margin:0 0 16px;padding-left:20px;line-height:1.6}
+.members{list-style:none;padding:0;display:grid;gap:12px}
+.members li{display:flex;gap:12px;align-items:center;border:1px solid #ddd;border-radius:12px;padding:12px 16px;background:#fff}
+.avatar{width:40px;height:40px;border-radius:50%;background:#eaf3de;display:flex;align-items:center;justify-content:center;font-weight:700}
+.muted{color:#666;font-size:13px}
 </style>
 </head>
 <body>
-<h1>Sudoku Solution Validator (V-1-5)</h1>
-<p style="margin:0 0 16px;color:#555;font-size:14px">1) Тестийн өгөгдөл сонгох эсвэл хүснэгтээ бичих/файлаас ачаалах &rarr; 2) <b>Ажиллуулах</b> дарах &rarr; 3) самбар болон баруун талын урсгалын төлвийг ажиглах.</p>
+<header class="top">
+  <a class="brand" href="#/">Sudoku Validator <span>V-1-5</span></a>
+  <nav aria-label="Үндсэн цэс">
+    <a href="#/" data-r="/">Нүүр</a>
+    <a href="#/validator" data-r="/validator">Шалгагч</a>
+    <a href="#/about" data-r="/about">Бидний тухай</a>
+  </nav>
+</header>
+
+<section class="page prose" id="p-/">
+  <h1>Sudoku Solution Validator</h1>
+  <p class="lead">9x9 Sudoku хүснэгтийн шийд зөв эсэхийг олон урсгалаар шалгадаг хичээлийн бие даалтын төсөл.</p>
+  <h2>Даалгавар</h2>
+  <table class="info"><tbody>
+    <tr><th>Хичээл</th><td>F.CSM302 Үйлдлийн систем, Бие даалт 1</td></tr>
+    <tr><th>Хуваарилалтын код</th><td>V-1-5</td></tr>
+    <tr><th>Сурах бичиг</th><td>Operating System Concepts (2018), Бүлэг 4 – Threads &amp; Concurrency, Programming Project</td></tr>
+    <tr><th>UI дүрслэл</th><td>Sudoku board</td></tr>
+  </tbody></table>
+  <h2>Шаардлага</h2>
+  <ul>
+    <li>Мөр бүрийг шалгах нэг урсгал, багана бүрийг шалгах нэг урсгал.</li>
+    <li>3x3 дэд хүснэгт бүрийг шалгах есөн урсгал (нийт <b>11 урсгал</b>).</li>
+    <li>Эцэг урсгал хүснэгтийг урсгалуудад дамжуулж, бүгдийг нь хүлээн (join) үр дүнг нэгтгэнэ.</li>
+    <li>Сонголт: мөр, багана, дэд хүснэгт бүрт тусдаа урсгал (<b>27 урсгал</b>). Хоёр горимыг хоёуланг нь дэмжинэ.</li>
+  </ul>
+  <h2>Хэрхэн ажилладаг вэ</h2>
+  <ol>
+    <li>Оролтын текстийг 9x9 хүснэгт болгон уншиж, алдааг мөр, баганаар нь тэмдэглэнэ.</li>
+    <li>Бүлэг бүрийн (мөр, багана, дэд хүснэгт) 9 нүдэнд давхардал эсвэл 1–9-өөс гадуур утга байгааг шалгана.</li>
+    <li>Урсгал бүр хүснэгтийг зөвхөн уншиж, үр дүнгээ өөрийн нүдэнд бичдэг тул lock хэрэггүй.</li>
+    <li>Эцэг урсгал бүх урсгалыг хүлээж, нэгтгэсэн дүгнэлт (<i>Зөв / Буруу шийд</i>) гаргана.</li>
+  </ol>
+  <p class="notebox">Энэ хувилбарт урсгал бүр Python-ы <code>threading</code> урсгал бөгөөд сервер дээр ажиллана.</p>
+  <p><a class="cta" href="#/validator">Шалгагчийг ажиллуулах →</a></p>
+</section>
+
+<section class="page" id="p-/validator">
+<h1>Шалгагчийг ажиллуулах</h1>
+<ol class="steps">
+  <li><b>Өгөгдөл сонгох:</b> жагсаалтаас тест сонгох, хүснэгтээ текст талбарт бичих эсвэл <i>Файл ачаалах</i>-аар .txt оруулах.</li>
+  <li><b>Горим сонгох:</b> 11 урсгал (мөр, багана, 9 дэд хүснэгт) эсвэл 27 урсгал (бүлэг бүрт тусдаа). Хурдыг тохируулна.</li>
+  <li><b>Ажиллуулах</b> дарах: ажил бүрийг сервер дээр тусдаа урсгал гүйцэтгэнэ.</li>
+  <li><b>Ажиглах:</b> самбар дээр шалгаж буй бүлэг өнгөөр тодорч, давхардсан нүд улаан болно. Баруун талд урсгал бүрийн төлөв <i>хүлээж буй → ажиллаж байна → OK/АЛДАА</i> өөрчлөгдөнө.</li>
+</ol>
 <div class="bar">
   <select id="sample" aria-label="Тестийн өгөгдөл"></select>
   <select id="mode" aria-label="Урсгалын горим">
@@ -59,7 +123,31 @@ textarea{font-family:ui-monospace,Menlo,monospace;font-size:14px;width:240px;hei
   </div>
   <div id="th"></div>
 </div>
+</section>
+
+<section class="page prose" id="p-/about">
+  <h1>Бидний тухай</h1>
+  <p class="lead">F.CSM302 Үйлдлийн систем хичээлийн Бие даалт 1, хуваарилалтын код V-1-5.</p>
+  <h2>Багийн гишүүд</h2>
+  <ul class="members">
+    <li><span class="avatar" aria-hidden="true">О</span><span><b>О.Батцэцэг</b><br><span class="muted">B241940010</span></span></li>
+    <li><span class="avatar" aria-hidden="true">А</span><span><b>А.Пүрэвдэмбэрэл</b><br><span class="muted">B242270090</span></span></li>
+  </ul>
+  <h2>Төслийн тухай</h2>
+  <p>Sudoku шийдийг олон урсгалаар шалгах программыг Python (үйлдлийн системийн урсгал) болон онлайн хувилбар (React, Web Worker) гэсэн хоёр хэлбэрээр хэрэгжүүлсэн.</p>
+  <p><a href="https://github.com/Baagii-dev/V-1-5-Sudoku-Solution-Validator" target="_blank" rel="noreferrer">GitHub репозитори</a></p>
+</section>
+
 <script>
+const ROUTES = ['/', '/validator', '/about'];
+function route() {
+  const h = location.hash.replace(/^#/, '');
+  const r = ROUTES.includes(h) ? h : (!h && location.search ? '/validator' : '/');
+  document.querySelectorAll('.page').forEach(p => p.classList.toggle('on', p.id === 'p-' + r));
+  document.querySelectorAll('header.top nav a').forEach(a => a.classList.toggle('on', a.dataset.r === r));
+}
+window.addEventListener('hashchange', route);
+route();
 const $ = id => document.getElementById(id);
 const g = $('g'), th = $('th'), msg = $('msg'), errs = $('errs'), input = $('input');
 const DESC = {
