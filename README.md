@@ -21,7 +21,16 @@
 3x3 дэд хүснэгт бүрийг тусдаа урсгал шалгаж, үр дүнг эцэг урсгал нэгтгэнэ.
 Шалгалтын үр дүнг Sudoku самбар дээр мөр, багана, дэд хүснэгтээр ялган харуулна.
 
-## Quick Start
+## Онлайн хувилбар (татах шаардлагагүй)
+
+Вэб хувилбар GitHub Pages дээр ажиллана: https://baagii-dev.github.io/V-1-5-Sudoku-Solution-Validator/
+
+Энэ хувилбарт шалгалтыг хөтөч дээр **Web Worker** урсгалууд (11 эсвэл 27) гүйцэтгэнэ.
+Web Worker нь хөтчийн урсгал, харин доорх Python хувилбар нь үйлдлийн системийн жинхэнэ
+урсгал (`threading`) ашигладаг бөгөөд даалгаварт тавигдсан үндсэн хэрэгжүүлэлт нь тэр юм.
+Вэб хувилбарын эх код `web/` хавтастай (React + Vite). Локал дээр ажиллуулах: `cd web && npm ci && npm run dev`.
+
+## Quick Start (Python хувилбар)
 
 **Шаардлага:** Python 3.9 эсвэл түүнээс дээш (гадны сан суулгахгүй), вэб хөтөч.
 Python-ы version шалгах: `python3 --version` (Windows дээр `python --version`).
@@ -64,7 +73,8 @@ python3 src/validator.py --mode=27 tests/invalid_box.txt
 
 | Хавтас | Агуулга |
 |---|---|
-| `src/` | Эх код |
+| `src/` | Python эх код (OS урсгалтай үндсэн хэрэгжүүлэлт) |
+| `web/` | React + Web Worker вэб хувилбар (GitHub Pages) |
 | `tests/` | Үндсэн ба нэмэлт тестийн өгөгдөл |
 | `docs/` | Manual, тайлан, зураг |
 
@@ -73,6 +83,8 @@ python3 src/validator.py --mode=27 tests/invalid_box.txt
 ```bash
 python3 tests/test_validator.py
 ```
+
+Вэб хувилбарын туршилт (Node 22): `cd web && npm test`
 
 `tests/` дотор: `valid_book.txt` (зөв), `invalid_row/col/box/cell.txt` (шийдийн алдаа),
 `bad_letter/range/short.txt` (буруу оролт). Нэмэлт тестийг `tests/test_validator.py`-д нэмнэ.
@@ -85,7 +97,7 @@ python3 tests/test_validator.py
 
 ## Ашигласан сан, бэлэн код, AI
 
-- **Сан:** Зөвхөн Python-ы стандарт сан (`threading`, `http.server`, `json`, `unittest`). Гадны сан суулгахгүй.
+- **Сан:** Python хувилбар: зөвхөн стандарт сан (`threading`, `http.server`, `json`, `unittest`). Вэб хувилбар: React, Vite (`web/package.json`).
 - **AI:** `src/validator.py`, `src/app.py`, `src/ui.html`, `tests/test_validator.py` болон `docs/` доторх Manual, Report-ийн эхийг Claude Code (Anthropic)-ийн тусламжтай бичсэн. Багийнхан кодыг уншиж, ажиллуулан шалгасан.
 - **Бэлэн код:** Сурах бичгийн (OSC 2018) Бүлэг 4-ийн Sudoku төслийн тайлбараас бусад бэлэн код хуулаагүй.
 

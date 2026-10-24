@@ -11,6 +11,11 @@
 - Орчин үеийн вэб хөтөч (Chrome 155 дээр туршсан)
 
 ### 1.3 Суулгах ба нээх
+
+**Татахгүйгээр (онлайн):** https://baagii-dev.github.io/V-1-5-Sudoku-Solution-Validator/ хаягийг хөтчөөр нээнэ.
+Энэ хувилбарт шалгалтыг хөтчийн Web Worker урсгалууд гүйцэтгэнэ.
+
+**Локал дээр (Python хувилбар):**
 ```bash
 git clone https://github.com/Baagii-dev/V-1-5-Sudoku-Solution-Validator.git
 cd V-1-5-Sudoku-Solution-Validator
