@@ -20,3 +20,6 @@ venv/
 # Node / web build
 node_modules/
 web/dist/
+
+# C binary
+src/c/validator
