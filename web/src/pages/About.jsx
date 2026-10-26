@@ -17,10 +17,14 @@ export default function About() {
       <section className="sec">
         <h2>Багийн гишүүд</h2>
         <div className="team">
-          <div className="member"><span className="avatar" aria-hidden="true">О</span><span><b>О.Батцэцэг</b><br /><span className="muted">B241940010</span></span></div>
-          <div className="member"><span className="avatar" aria-hidden="true">А</span><span><b>А.Пүрэвдэмбэрэл</b><br /><span className="muted">B242270090</span></span></div>
-        </div>
-      </section>
+    <div className="member"><span className="avatar" aria-hidden="true">О</span><span><b>О.Батцэцэг</b><br /><span className="muted">B241940010</span></span></div>
+    <div className="member"><span className="avatar" aria-hidden="true">А</span><span><b>А.Пүрэвдэмбэрэл</b><br /><span className="muted">B242270090</span></span></div>
+    <div className="member"><span className="avatar" aria-hidden="true">U</span><span><b>Undram Ganjiguur</b><br /><span className="muted">B241910002</span></span></div>
+    <div className="member"><span className="avatar" aria-hidden="true">D</span><span><b>Dulguun Ariunbayr</b><br /><span className="muted">B222270837</span></span></div>
+    <div className="member"><span className="avatar" aria-hidden="true">T</span><span><b>Tserendulam Tuvshinjargal</b><br /><span className="muted">B241910025</span></span></div>
+    <div className="member"><span className="avatar" aria-hidden="true">U</span><span><b>Ulziisuren Erdenetugs</b><br /><span className="muted">B190910811</span></span></div>
+      </div>
+    </section>
 
       <section className="sec">
         <h2>Төслийн тоон үзүүлэлт</h2>

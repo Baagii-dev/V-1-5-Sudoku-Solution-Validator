@@ -2,8 +2,7 @@
 
 **Хуваарилалтын код:** V-1-5
 **Төсөл:** Sudoku Solution Validator (Operating System Concepts 2018, Бүлэг 4, Threads & Concurrency)
-**Гишүүд:** | B241940010 | О.Батцэцэг | 
-            | B242270090| А.Пүрэвдэмбэрэл| 
+**Гишүүд:** О.Батцэцэг (B241940010); А.Пүрэвдэмбэрэл (B242270090); Undram Ganjiguur (B241910002); Dulguun Ariunbayr (B222270837); Tserendulam Tuvshinjargal (B241910025); Ulziisuren Erdenetugs (B190910811)  
 **GitHub:** https://github.com/Baagii-dev/V-1-5-Sudoku-Solution-Validator
 
 
@@ -135,8 +134,6 @@ React UI (App.jsx) --parseBoard--> validate(board, mode)
 | CI: Release | `semantic-release` нь commit-оос release tag (`v1.0.x`) болон release note үүсгэнэ |
 | Хамгаалалт | Workflow-ийн action бүрийг commit SHA-аар тогтоосон, зөвхөн шаардлагатай эрхтэй |
 
-**Гишүүн бүрийн хариуцсан ажил ба оролцоо:** [БӨГЛӨХ: гишүүн бүрийн хариуцсан ажил, commit/файл]
-
 ## Ашигласан материал
 - Silberschatz, Galvin, Gagne. *Operating System Concepts* (2018), Бүлэг 4, Programming Projects.
 - Python 3 documentation: `threading`, `http.server`.
@@ -152,8 +149,13 @@ React UI (App.jsx) --parseBoard--> validate(board, mode)
 | Үндсэн дүрслэл | Sudoku board |
 
 | Гишүүн | Хариуцах ажил | Commit/file |
-| B241940010 О.Батцэцэг | Python, C, онлайн хувилбарын хэрэгжүүлэлт, вэб UI, тест, CI, Manual, Report | `src/`, `web/`, `tests/`, `.github/`, `docs/` |
-| B242270090 А.Пүрэвдэмбэрэл| | |
+|---|---|---|
+| B241940010 О.Батцэцэг | | |
+| B242270090 А.Пүрэвдэмбэрэл | | |
+| B241910002 Undram Ganjiguur | | |
+| B222270837 Dulguun Ariunbayr | | |
+| B241910025 Tserendulam Tuvshinjargal | | |
+| B190910811 Ulziisuren Erdenetugs | | |
 
 | Тест | Оролт/нөхцөл | Хүлээгдсэн үр дүн |
 |---|---|---|
