@@ -126,6 +126,16 @@ React UI (App.jsx) --parseBoard--> validate(board, mode)
 ## 10. Дүгнэлт
 Номын шаардлагын дагуу 11 урсгалтай (болон 27 урсгалтай) validator хэрэгжүүлж, бодит урсгалтай холбогдсон Sudoku самбар UI-тай болгосон. Зөв, буруу, захын оролтыг тестээр нотолсон.
 ## GitHub дахь багийн ажиллагаа
+Эх код нь анхнаасаа GitHub репозиторид (https://github.com/Baagii-dev/V-1-5-Sudoku-Solution-Validator) хөтлөгдсөн. 2026-10-09-ээс 2026-10-26 хүртэл нийт 42 commit хийгдсэн бөгөөд бүгд B241940010 гишүүний git акаунтаас орсон. Commit-уудыг Conventional Commits загвараар (`fix:`) бичсэн.
+
+| Зүйл | Тайлбар |
+|---|---|
+| CI: Test | Push бүрт Python тестийг Ubuntu, Windows, macOS дээр, C хувилбарыг Ubuntu, macOS дээр, JavaScript тестийг Node 22 дээр автоматаар ажиллуулна |
+| CI: Pages | `web/` хавтсыг build хийж GitHub Pages дээр байршуулна (онлайн хувилбар) |
+| CI: Release | `semantic-release` нь commit-оос release tag (`v1.0.x`) болон release note үүсгэнэ |
+| Хамгаалалт | Workflow-ийн action бүрийг commit SHA-аар тогтоосон, зөвхөн шаардлагатай эрхтэй |
+
+**Гишүүн бүрийн хариуцсан ажил ба оролцоо:** [БӨГЛӨХ: гишүүн бүрийн хариуцсан ажил, commit/файл]
 
 ## Ашигласан материал
 - Silberschatz, Galvin, Gagne. *Operating System Concepts* (2018), Бүлэг 4, Programming Projects.
@@ -142,7 +152,7 @@ React UI (App.jsx) --parseBoard--> validate(board, mode)
 | Үндсэн дүрслэл | Sudoku board |
 
 | Гишүүн | Хариуцах ажил | Commit/file |
-| B241940010 О.Батцэцэг | | |
+| B241940010 О.Батцэцэг | Python, C, онлайн хувилбарын хэрэгжүүлэлт, вэб UI, тест, CI, Manual, Report | `src/`, `web/`, `tests/`, `.github/`, `docs/` |
 | B242270090 А.Пүрэвдэмбэрэл| | |
 
 | Тест | Оролт/нөхцөл | Хүлээгдсэн үр дүн |
