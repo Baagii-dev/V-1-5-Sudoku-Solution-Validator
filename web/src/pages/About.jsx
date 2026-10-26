@@ -17,12 +17,12 @@ export default function About() {
       <section className="sec">
         <h2>Багийн гишүүд</h2>
         <div className="team">
-    <div className="member"><span className="avatar" aria-hidden="true">О</span><span><b>О.Батцэцэг</b><br /><span className="muted">B241940010</span></span></div>
-    <div className="member"><span className="avatar" aria-hidden="true">А</span><span><b>А.Пүрэвдэмбэрэл</b><br /><span className="muted">B242270090</span></span></div>
-    <div className="member"><span className="avatar" aria-hidden="true">Г</span><span><b>Г.Ундрам</b><br /><span className="muted">B241910002</span></span></div>
-    <div className="member"><span className="avatar" aria-hidden="true">А</span><span><b>А.Дөлгөөн</b><br /><span className="muted">B222270837</span></span></div>
-    <div className="member"><span className="avatar" aria-hidden="true">Т</span><span><b>Т.Цэрэндулам</b><br /><span className="muted">B241910025</span></span></div>
-    <div className="member"><span className="avatar" aria-hidden="true">Э</span><span><b>Э.Өлзийсүрэн</b><br /><span className="muted">B190910811</span></span></div>
+    <div className="member"><span className="avatar" aria-hidden="true">О</span><span><b>О. Батцэцэг</b><br /><span className="muted">B241940010</span></span></div>
+    <div className="member"><span className="avatar" aria-hidden="true">А</span><span><b>А. Пүрэвдэмбэрэл</b><br /><span className="muted">B242270090</span></span></div>
+    <div className="member"><span className="avatar" aria-hidden="true">Г</span><span><b>Г. Ундрам</b><br /><span className="muted">B241910002</span></span></div>
+    <div className="member"><span className="avatar" aria-hidden="true">А</span><span><b>А. Дөлгөөн</b><br /><span className="muted">B222270837</span></span></div>
+    <div className="member"><span className="avatar" aria-hidden="true">Т</span><span><b>Т. Цэрэндулам</b><br /><span className="muted">B241910025</span></span></div>
+    <div className="member"><span className="avatar" aria-hidden="true">Э</span><span><b>Э. Өлзийсүрэн</b><br /><span className="muted">B190910811</span></span></div>
       </div>
     </section>
 
