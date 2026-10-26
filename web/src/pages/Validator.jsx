@@ -25,6 +25,14 @@ function initialState() {
   };
 }
 
+function boardPreview(text) {
+  const lines = String(text).trim().split(/\r\n|\r|\n/);
+  return Array.from({ length: SIZE }, (_, r) => {
+    const cells = (lines[r] || '').trim().replaceAll(',', ' ').split(/\s+/).filter(Boolean);
+    return Array.from({ length: SIZE }, (_, c) => /^\d{1,2}$/.test(cells[c] || '') ? cells[c] : '');
+  });
+}
+
 export default function Validator() {
   const init = useMemo(initialState, []);
   const [text, setText] = useState(init.text);
@@ -126,7 +134,14 @@ export default function Validator() {
   }, [run, steps, step, done]);
 
   const errCells = useMemo(() => new Set(errors.filter((e) => e.row && e.col).map((e) => key([e.row - 1, e.col - 1]))), [errors]);
-  const preview = useMemo(() => (run ? run.board : parseBoard(text).board ?? null), [run, text]);
+  const preview = useMemo(() => (run ? run.board : boardPreview(text)), [run, text]);
+
+  const onCellChange = (row, col, value) => {
+    const next = boardPreview(text);
+    next[row][col] = value;
+    setText(next.map((line) => line.join(' ')).join('\n'));
+    reset();
+  };
 
   const onFile = async (e) => {
     const f = e.target.files[0];
@@ -225,7 +240,7 @@ export default function Validator() {
       <div className="main">
         <section className="panel boardpanel">
           <h2 className="ptitle">Sudoku самбар</h2>
-          <Board board={preview} bad={bad} errCells={errCells} cur={cur} />
+          <Board board={preview} bad={bad} errCells={errCells} cur={cur} onCellChange={onCellChange} />
           {errors.length > 0 && (
             <ul className="errs">
               {errors.map((e, i) => (

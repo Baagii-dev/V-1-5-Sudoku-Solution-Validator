@@ -99,7 +99,8 @@ button.primary{background:#222;color:#fff;border:0;border-radius:6px;font-weight
 .main{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px;align-items:start}
 .main .td{margin-top:0}
 .boardpanel .g{grid-template-columns:repeat(9,46px)}
-.boardpanel .c{width:46px;height:46px;font-size:20px}
+.boardpanel .c{width:46px;height:46px;font-size:20px;padding:0;text-align:center;box-sizing:border-box;color:inherit}
+.boardpanel input.c{font-family:inherit;outline:none}.boardpanel input.c:focus{outline:2px solid #5b8cff;outline-offset:-2px;position:relative;z-index:1}
 @media (max-width:900px){.panel.input,.main{grid-template-columns:1fr}.stats{grid-template-columns:repeat(3,1fr)}.stat.big{grid-column:1/-1}.boardpanel{overflow-x:auto}}
 :root{--bg:#fafaf8;--fg:#222;--muted:#666;--card:#fff;--line:#ddd;--row:#e6f1fb;--col:#eaf3de;--box:#faeeda}
 a { color: inherit; }
@@ -363,7 +364,19 @@ function drawBoard() {
   $('st-bad').textContent = threads.length && threads.some(t => t.groups) ? bad.size : '—';
   g.replaceChildren();
   for (let r = 0; r < 9; r++) for (let c = 0; c < 9; c++) {
-    const d = el('div', 'c', board ? board[r][c] : '');
+    const d = document.createElement('input');
+    d.className = 'c'; d.type = 'text'; d.inputMode = 'numeric'; d.maxLength = 2;
+    d.setAttribute('aria-label', `${r + 1}-р мөр, ${c + 1}-р багана`);
+    d.value = board && board[r] ? (board[r][c] ?? '') : '';
+    d.oninput = () => {
+      d.value = d.value.replace(/\D/g, '').slice(0, 2);
+      const rows = Array.from({length: 9}, (_, rr) => Array.from(g.querySelectorAll('.c')).slice(rr * 9, rr * 9 + 9).map(cell => cell.value || ''));
+      input.value = rows.map(row => row.join(' ')).join('\n');
+      board = rows;
+      clearInterval(timer); timer = null; bad = new Set(); cur = null; errCells = new Set();
+      msg.textContent = '—'; msg.className = ''; $('st-ms').textContent = '—'; errs.replaceChildren();
+      placeholderThreads(); drawThreads(); $('st-bad').textContent = '—';
+    };
     const k = r * 9 + c;
     if (bad.has(k)) d.classList.add('bad');
     else if (errCells.has(k)) d.classList.add('inerr');
@@ -429,9 +442,13 @@ function reset() {
   placeholderThreads(); parseLocal(); drawBoard(); drawThreads();
 }
 
-function parseLocal() { // зөвхөн дүрслэхэд; жинхэнэ шалгалтыг сервер хийнэ
-  const rows = input.value.trim().split(/\n+/).map(l => l.trim().split(/[\s,]+/));
-  if (rows.length === 9 && rows.every(r => r.length === 9 && r.every(x => /^\d+$/.test(x)))) board = rows.map(r => r.map(Number));
+function parseLocal() { // самбарыг текст талбартай зэрэг шинэчилнэ; шалгалтыг сервер хийнэ
+  const lines = input.value.trim() ? input.value.trim().split(/\n+/) : [];
+  const rows = Array.from({length: 9}, (_, r) => {
+    const cells = lines[r] ? lines[r].trim().split(/[\s,]+/) : [];
+    return Array.from({length: 9}, (_, c) => /^\d{1,2}$/.test(cells[c] || '') ? cells[c] : '');
+  });
+  board = rows;
 }
 
 function showInputErrors(list) {

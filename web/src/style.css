@@ -131,6 +131,8 @@ button.primary:disabled { opacity: 0.5; cursor: default; }
 .main .td { margin-top: 0; }
 .boardpanel .g { grid-template-columns: repeat(9, 46px); }
 .boardpanel .c { width: 46px; height: 46px; font-size: 20px; }
+.boardpanel input.c { display: block; box-sizing: border-box; padding: 0; text-align: center; color: inherit; font-family: inherit; outline: none; }
+.boardpanel input.c:focus { outline: 2px solid #5b8cff; outline-offset: -2px; position: relative; z-index: 1; }
 @media (max-width: 900px) {
   .panel.input, .main { grid-template-columns: 1fr; }
   .stats { grid-template-columns: repeat(3, 1fr); }

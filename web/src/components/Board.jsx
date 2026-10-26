@@ -1,7 +1,7 @@
 import { SIZE } from '../core/parseBoard.js';
 
 /** 9x9 самбар. bad: давхардсан нүд, errCells: оролтын алдаатай нүд, cur: одоо шалгаж буй бүлэг. */
-export default function Board({ board, bad, errCells, cur }) {
+export default function Board({ board, bad, errCells, cur, onCellChange }) {
   const cells = [];
   for (let r = 0; r < SIZE; r++) {
     for (let c = 0; c < SIZE; c++) {
@@ -13,9 +13,16 @@ export default function Board({ board, bad, errCells, cur }) {
       if (c % 3 === 2 && c < SIZE - 1) cls += ' br';
       if (r % 3 === 2 && r < SIZE - 1) cls += ' bb';
       cells.push(
-        <div key={k} className={cls}>
-          {board ? board[r][c] : ''}
-        </div>,
+        <input
+          key={k}
+          className={cls}
+          type="text"
+          inputMode="numeric"
+          maxLength={2}
+          aria-label={`${r + 1}-р мөр, ${c + 1}-р багана`}
+          value={board?.[r]?.[c] || ''}
+          onChange={(e) => onCellChange(r, c, e.target.value.replace(/\D/g, '').slice(0, 2))}
+        />,
       );
     }
   }
