@@ -24,7 +24,7 @@
 
 ## Онлайн хувилбар (татах шаардлагагүй)
 
-Вэб хувилбар GitHub Pages дээр ажиллана: https://baagii-dev.github.io/V-1-5-Sudoku-Solution-Validator/
+**Онлайн Sudoku шалгагч:** [Вэб хувилбарыг нээх](https://baagii-dev.github.io/V-1-5-Sudoku-Solution-Validator/)
 
 Энэ хувилбарт шалгалтыг хөтөч дээр **Web Worker** урсгалууд (11 эсвэл 27) гүйцэтгэнэ.
 Web Worker нь хөтчийн урсгал, харин доорх Python хувилбар нь үйлдлийн системийн жинхэнэ
