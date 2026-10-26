@@ -49,6 +49,19 @@ python3 src/app.py
 **UI хэрэглэх 3 алхам:** (1) тестийн өгөгдөл сонгох эсвэл хүснэгтээ бичих/файлаас ачаалах →
 (2) **Ажиллуулах** дарах → (3) самбар болон баруун талын урсгалын төлвийг ажиглах.
 
+**C хувилбар (POSIX Pthreads, Linux/macOS):** сурах бичгийн Programming Project-ийн нэгэн адил
+`pthread_create`/`pthread_join`-оор жинхэнэ OS урсгал ашиглана. Шаардлага: `cc` (gcc/clang), `make`.
+
+```bash
+cd src/c
+make                                    # build
+./validator ../../tests/valid_book.txt  # 11 урсгал
+./validator --mode=27 ../../tests/invalid_box.txt
+make test                               # Python хувилбартай гаралтыг тулгана
+```
+
+Windows дээр C хувилбарыг WSL (Ubuntu) дотор ажиллуулна, эсвэл Python/онлайн хувилбарыг хэрэглэнэ.
+
 **Командын мөрөөс шалгах (UI-гүй):**
 
 ```bash
@@ -73,7 +86,7 @@ python3 src/validator.py --mode=27 tests/invalid_box.txt
 
 | Хавтас | Агуулга |
 |---|---|
-| `src/` | Python эх код (OS урсгалтай үндсэн хэрэгжүүлэлт) |
+| `src/` | Python эх код (`threading`) болон `src/c/` дахь C эх код (Pthreads) |
 | `web/` | React + Web Worker вэб хувилбар (GitHub Pages) |
 | `tests/` | Үндсэн ба нэмэлт тестийн өгөгдөл |
 | `docs/` | Manual, тайлан, зураг |

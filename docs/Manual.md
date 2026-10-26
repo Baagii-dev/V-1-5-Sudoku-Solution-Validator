@@ -38,6 +38,16 @@ python3 src/app.py
 | Шалгагч | Хүснэгт оруулах, горим сонгох, шалгалтыг ажиллуулж урсгалыг ажиглах |
 | Бидний тухай | Багийн гишүүд, тоон үзүүлэлт, ашигласан технологи, холбоосууд |
 
+### 1.3.2 C хувилбар (командын мөр)
+Сурах бичгийн Pthreads загвартай ижил C хувилбар `src/c/` хавтсанд байна. Linux, macOS дээр:
+```bash
+cd src/c
+make
+./validator --mode=11 ../../tests/valid_book.txt
+./validator --mode=27 ../../tests/invalid_box.txt
+```
+Гаралт нь Python хувилбартай ижил (`ЗӨВ ШИЙД` / `БУРУУ ШИЙД`, давхардсан нүднүүд). Оролт алдаатай бол `ОРОЛТЫН АЛДАА` ба мөр, баганын мэдээлэл гарч, гарах код 1 байна. Windows дээр WSL (Ubuntu) ашиглана.
+
 ### 1.4 Оролт ба тохиргоо
 | Удирдлага | Утга |
 |---|---|
@@ -114,6 +124,8 @@ python3 src/app.py
 python3 src/validator.py tests/valid_book.txt        
 python3 src/validator.py --mode=27 tests/invalid_box.txt
 python3 tests/test_validator.py                     
+cd src/c && make && ./validator ../../tests/valid_book.txt   # C хувилбар
+cd src/c && make test                                        # C ба Python гаралтыг тулгах
 cd web && npm ci && npm run dev    # онлайн хувилбарыг локал дээр
 cd web && npm test                 # JavaScript тест
 ```
