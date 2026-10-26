@@ -66,7 +66,8 @@ Windows дээр C хувилбарыг WSL (Ubuntu) дотор ажиллуул
 **Командын мөрөөс шалгах (UI-гүй):**
 
 ```bash
-python3 src/validator.py tests/valid_book.txt tests/invalid_row.txt
+python3 src/validator.py tests/valid_book.txt
+python3 src/validator.py tests/invalid_row.txt
 python3 src/validator.py --mode=27 tests/invalid_box.txt
 ```
 
