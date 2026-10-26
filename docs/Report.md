@@ -2,7 +2,7 @@
 
 **Хуваарилалтын код:** V-1-5
 **Төсөл:** Sudoku Solution Validator (Operating System Concepts 2018, Бүлэг 4, Threads & Concurrency)
-**Гишүүд:** О.Батцэцэг (B241940010); А.Пүрэвдэмбэрэл (B242270090); Undram Ganjiguur (B241910002); Dulguun Ariunbayr (B222270837); Tserendulam Tuvshinjargal (B241910025); Ulziisuren Erdenetugs (B190910811)  
+**Гишүүд:** О.Батцэцэг (B241940010); А.Пүрэвдэмбэрэл (B242270090); Г.Ундрам (B241910002); А.Дөлгөөн (B222270837); Т.Цэрэндулам (B241910025); Э.Өлзийсүрэн (B190910811)  
 **GitHub:** https://github.com/Baagii-dev/V-1-5-Sudoku-Solution-Validator
 
 
@@ -152,10 +152,10 @@ React UI (App.jsx) --parseBoard--> validate(board, mode)
 |---|---|---|
 | B241940010 О.Батцэцэг | | |
 | B242270090 А.Пүрэвдэмбэрэл | | |
-| B241910002 Undram Ganjiguur | | |
-| B222270837 Dulguun Ariunbayr | | |
-| B241910025 Tserendulam Tuvshinjargal | | |
-| B190910811 Ulziisuren Erdenetugs | | |
+| B241910002 Г.Ундрам | | |
+| B222270837 А.Дөлгөөн | | |
+| B241910025 Т.Цэрэндулам | | |
+| B190910811 Э.Өлзийсүрэн | | |
 
 | Тест | Оролт/нөхцөл | Хүлээгдсэн үр дүн |
 |---|---|---|
