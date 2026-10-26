@@ -98,6 +98,6 @@ python3 tests/test_validator.py
 ## Ашигласан сан, бэлэн код, AI
 
 - **Сан:** Python хувилбар: зөвхөн стандарт сан (`threading`, `http.server`, `json`, `unittest`). Вэб хувилбар: React, Vite (`web/package.json`).
-- **AI:** `src/validator.py`, `src/app.py`, `src/ui.html`, `tests/test_validator.py` болон `docs/` доторх Manual, Report-ийн эхийг Claude Code (Anthropic)-ийн тусламжтай бичсэн. Багийнхан кодыг уншиж, ажиллуулан шалгасан.
+- **AI:** `src/validator.py`, `src/app.py`, `src/ui.html`, `tests/test_validator.py`, `web/` (React онлайн хувилбар), `.github/workflows/` болон `docs/` доторх Manual, Report-ийн эхийг Claude Code (Anthropic)-ийн тусламжтай бичсэн. Багийнхан кодыг уншиж, ажиллуулан шалгасан.
 - **Бэлэн код:** Сурах бичгийн (OSC 2018) Бүлэг 4-ийн Sudoku төслийн тайлбараас бусад бэлэн код хуулаагүй.
 

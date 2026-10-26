@@ -127,7 +127,7 @@ React UI (App.jsx) --parseBoard--> validate(board, mode)
 ## Ашигласан материал
 - Silberschatz, Galvin, Gagne. *Operating System Concepts* (2018), Бүлэг 4, Programming Projects.
 - Python 3 documentation: `threading`, `http.server`.
-- AI: Claude Code (Anthropic) нь validator, UI, тест, баримтын эхийг бичихэд ашиглагдсан. Дэлгэрэнгүйг README-ээс үзнэ.
+- AI: Claude Code (Anthropic) нь Python validator, вэб UI, онлайн (React) хувилбар, тест, GitHub Actions тохиргоо, баримтын эхийг бичихэд ашиглагдсан. Дэлгэрэнгүйг README-ээс үзнэ.
 
 ## Хавсралт A. Ажлын төлөвлөгөө
 | Талбар | Мэдээлэл |
@@ -135,9 +135,20 @@ React UI (App.jsx) --parseBoard--> validate(board, mode)
 | Хуваарилалтын код | V-1-5 |
 | Төсөл | Sudoku Solution Validator |
 | Repository | https://github.com/Baagii-dev/V-1-5-Sudoku-Solution-Validator |
-| Хэл/сан/орчин | Python 3.13, стандарт сан, macOS |
+| Хэл/сан/орчин | Python 3.13 (стандарт сан); онлайн хувилбар: JavaScript, React, Vite; macOS, Windows, Linux |
 | Үндсэн дүрслэл | Sudoku board |
 
 | Гишүүн | Хариуцах ажил | Commit/file |
 | B241940010 О.Батцэцэг | | |
 | B242270090 А.Пүрэвдэмбэрэл| | |
+
+| Тест | Оролт/нөхцөл | Хүлээгдсэн үр дүн |
+|---|---|---|
+| 1 | `valid_book.txt`, 11 ба 27 урсгал | Зөв шийд, бүх урсгал OK |
+| 2 | `invalid_row.txt` | Буруу шийд, мөрийн урсгал АЛДАА |
+| 3 | `invalid_col.txt` | Буруу шийд, баганын урсгал АЛДАА |
+| 4 | `invalid_box.txt` | Буруу шийд, дэд хүснэгтийн урсгалууд АЛДАА |
+| 5 | `invalid_cell.txt` | Нэг нүд мөр, багана, дэд хүснэгтэд зэрэг буруу |
+| 6 | `bad_letter.txt`, `bad_range.txt`, `bad_short.txt` | Оролтын алдаа, мөр ба баганыг заасан мессеж |
+| 7 | BOM ба CRLF-тэй файл | Зөв уншигдаж, шийд зөв гэж дүгнэнэ |
+| 8 | 11 ба 27 горимыг харьцуулах | Хоёр горим ижил дүгнэлт гаргана |
