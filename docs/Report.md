@@ -1,3 +1,19 @@
+<div align="center" style="height:262mm;position:relative;text-align:center;font-family:'Times New Roman',Times,serif;color:#000;page-break-after:always">
+<p align="center" style="margin:0 0 4px;font-size:12pt;font-weight:bold">ШИНЖЛЭХ УХААН, ТЕХНОЛОГИЙН ИХ СУРГУУЛЬ</p>
+<p align="center" style="margin:0;font-size:12pt;font-weight:bold">МЭДЭЭЛЭЛ, ХОЛБООНЫ ТЕХНОЛОГИЙН СУРГУУЛЬ</p>
+<p align="center" style="margin:28px 0 0"><img src="img/shutis_logo.png" alt="ШУТИС" style="height:105px;border:0;margin:0"></p>
+<p align="center" style="margin:70px 0 6px;font-size:34pt;font-weight:bold">Бие даалт 1. Тайлан</p>
+<p align="center" style="margin:0;font-size:26pt;font-weight:bold">F.CSM302 Үйлдлийн систем</p>
+<p align="center" style="margin:26px 0 0;font-size:12pt">2026-2027 оны хичээлийн жилийн намар</p>
+<p align="center" style="margin:60px 0 0;font-size:12pt"><b>Сэдэв:</b> V-1-5 Sudoku Solution Validator (Threads &amp; Concurrency)</p>
+<p align="center" style="margin:60px 0 0;font-size:12pt">Бэлтгэсэн: /................................../ О. Батцэцэг /B241940010/</p>
+<p align="center" style="margin:22px 0 0;font-size:12pt">Шалгасан: /....................................../</p>
+<div style="position:absolute;bottom:0;left:0;right:0">
+<p align="center" style="margin:0;font-size:12pt">Улаанбаатар хот</p>
+<p align="center" style="margin:4px 0 0;font-size:12pt">2026 он</p>
+</div>
+</div>
+
 # F.CSM302 Үйлдлийн систем: Бие даалт 1. Тайлан
 
 **Хуваарилалтын код:** V-1-5
@@ -7,7 +23,7 @@
 
 
 ## Хураангуй
-9x9 Sudoku хүснэгтийн шийд зөв эсэхийг олон урсгалаар шалгах программыг Python дээр хэрэгжүүлсэн. Мөр, багана, 3x3 дэд хүснэгтийг тусдаа урсгал шалгаж, эцэг урсгал үр дүнг нэгтгэнэ. Вэб UI нь Sudoku самбар дээр урсгал бүрийн шалгалтыг ялган харуулдаг. Нэмж, татах шаардлагагүй онлайн хувилбарыг React болон Web Worker ашиглан хэрэгжүүлж GitHub Pages дээр байршуулсан. 5 тестийн өгөгдөл, 3 буруу оролтын тест, Python-ы 11 unit тест, JavaScript-ийн 6 тест ашиглан зөв ажиллагааг нотолсон.
+9x9 Sudoku хүснэгтийн шийд зөв эсэхийг олон урсгалаар шалгах программыг Python дээр хэрэгжүүлсэн. Мөр, багана, 3x3 дэд хүснэгтийг тусдаа урсгал шалгаж, эцэг урсгал үр дүнг нэгтгэнэ. Вэб UI нь Sudoku самбар дээр урсгал бүрийн шалгалтыг ялган харуулдаг. Нэмж, татах шаардлагагүй онлайн хувилбарыг React болон Web Worker ашиглан хэрэгжүүлж GitHub Pages дээр байршуулсан. 5 тестийн өгөгдөл, 3 буруу оролтын тест, Python-ы 11 unit тест, JavaScript-ийн 8 тест ашиглан зөв ажиллагааг нотолсон.
 
 ## 1. Удиртгал
 Олон урсгалт програмчлал нь өгөгдөл хуваалцах, үр дүн нэгтгэх зэрэг OS-ийн урсгалын үндсэн ойлголтыг шаарддаг. Sudoku шийдийн шалгалт нь бие даасан гурван төрлийн шалгалтад задарч, урсгалд ажил хуваарилах ойлголтыг энгийнээр харуулдаг. Хамрах хүрээ: 9x9 хүснэгт, давхардал шалгах. Sudoku-г бодох (solver) хамаарахгүй.
@@ -89,7 +105,7 @@ React UI (App.jsx) --parseBoard--> validate(board, mode)
 ## 7. Туршилтын арга
 - Орчин: macOS 26.6.2 (arm64), Python 3.13.5, Chrome 155.
 - Өгөгдөл: `tests/` дотор 8 файл. Хүлээгдсэн үр дүнг Manual-ын 2.5, 2.6 хэсгээс үзнэ.
-- Автомат: `python3 tests/test_validator.py` (11 unit тест), `cd web && npm test` (6 тест, Node 22).
+- Автомат: `python3 tests/test_validator.py` (11 unit тест), `cd web && npm test` (8 тест, Node 22).
 - CI: GitHub Actions-ийн Test workflow нь Python тестийг Ubuntu, Windows, macOS дээр, JavaScript тестийг Ubuntu дээр ажиллуулна.
 - Командын мөр: `python3 src/validator.py tests/*.txt`.
 
