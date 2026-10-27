@@ -8,7 +8,7 @@
 body{font-family:-apple-system,Segoe UI,sans-serif;background:#fafaf8;color:#222;padding:24px;max-width:1100px;margin:auto}
 h1{font-size:20px;margin:0 0 16px}
 .bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
-button,select,.filebtn{font-size:14px;padding:6px 12px}
+button,select,.filebtn{font-size:16px;padding:8px 14px}
 .filebtn{border:1px solid #767676;border-radius:3px;background:#efefef;cursor:pointer}
 .wrap{display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start}
 .g{display:grid;grid-template-columns:repeat(9,38px);border:2px solid #444;width:max-content}
@@ -31,7 +31,7 @@ textarea{font-family:ui-monospace,Menlo,monospace;font-size:14px;width:240px;hei
 .td-trunk i{position:absolute;left:-3px;width:8px;height:8px;border-radius:50%;background:var(--blue);box-shadow:0 0 8px var(--blue);opacity:0}
 .td.run .td-trunk i{animation:td-down 1.2s linear infinite}.td.run .td-trunk i:nth-child(2){animation-delay:.4s}.td.run .td-trunk i:nth-child(3){animation-delay:.8s}
 .td-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:22px 12px;padding-top:8px;border-top:1px dotted #2b3556}
-.td-card{position:relative;padding:10px 12px;border-radius:10px;background:#0e111a;border:1px solid #1f2438;font-size:12px}
+.td-card{position:relative;padding:10px 12px;border-radius:10px;background:#0e111a;border:1px solid #1f2438;font-size:14px}
 .td-drop{position:absolute;top:-19px;left:50%;width:2px;height:18px;background:repeating-linear-gradient(#2b3556 0 3px,transparent 3px 6px)}
 .td-drop i{position:absolute;left:-3px;width:8px;height:8px;border-radius:50%;background:var(--blue);box-shadow:0 0 8px var(--blue);opacity:0}
 .td-card.run .td-drop i{animation:td-down-s .8s linear infinite}
@@ -40,7 +40,7 @@ textarea{font-family:ui-monospace,Menlo,monospace;font-size:14px;width:240px;hei
 .td-led{width:9px;height:9px;border-radius:50%;background:#444b63}
 .td-name{margin:4px 0 8px;color:#e8ecf5;font-size:13px;min-height:2.6em}
 .td-bar{height:6px;border-radius:3px;background:#1a1f31;overflow:hidden}.td-bar i{display:block;height:100%;width:0;background:var(--blue)}
-.td-state{margin-top:8px;color:#7d88a8}.td-meta{margin-top:2px;color:#566080;font-size:11px}
+.td-state{margin-top:8px;color:#7d88a8}.td-meta{margin-top:2px;color:#8a95b5;font-size:12px}
 .td-card.run{border-color:var(--amber);box-shadow:0 0 14px rgba(240,176,80,.25)}
 .td-card.run .td-led{background:var(--amber);animation:td-pulse .8s ease-in-out infinite}
 .td-card.run .td-bar i{width:60%;background:var(--amber);animation:td-fill 1s ease-in-out infinite alternate}
@@ -87,14 +87,14 @@ h1{margin:0}
 .ptitle{font-size:15px;margin:0 0 12px}
 .panel.input{display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,300px);gap:24px;align-items:start}
 .controls{display:grid;gap:12px}
-.fld{display:grid;gap:4px;font-size:13px;color:#666}.fld select{width:100%}
+.fld{display:grid;gap:6px;font-size:15px;color:#666}.fld select{width:100%}
 .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
 button.primary{background:#222;color:#fff;border:0;border-radius:6px;font-weight:600;cursor:pointer;padding:8px 18px}
 .editor textarea{width:100%;height:190px;resize:vertical}
-.note{font-size:12px;color:#666;margin-top:4px}
+.note{font-size:14px;color:#666;margin-top:4px;line-height:1.45}
 .stats{display:grid;grid-template-columns:2fr repeat(5,1fr);gap:12px}
 .stat{border:1px solid #ddd;border-radius:12px;background:#fff;padding:12px 16px;display:grid;gap:2px}
-.stat span{font-size:12px;color:#666}.stat b{font-size:22px}.stat.big b{font-size:24px}
+.stat span{font-size:14px;color:#666}.stat b{font-size:22px}.stat.big b{font-size:24px}
 .stat.ok b{color:#3b6d11}.stat.err b{color:#a32d2d}
 .main{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px;align-items:start}
 .main .td{margin-top:0}
@@ -371,7 +371,8 @@ function drawBoard() {
     d.oninput = () => {
       d.value = d.value.replace(/\D/g, '').slice(0, 2);
       const rows = Array.from({length: 9}, (_, rr) => Array.from(g.querySelectorAll('.c')).slice(rr * 9, rr * 9 + 9).map(cell => cell.value || ''));
-      input.value = rows.map(row => row.join(' ')).join('\n');
+      input.value = rows.map(row => row.map(v => v === '' ? '0' : v).join(' ')).join('\n');
+      g.querySelectorAll('.c').forEach(cell => cell.classList.remove('bad', 'inerr', 'row', 'col', 'box'));
       board = rows;
       clearInterval(timer); timer = null; bad = new Set(); cur = null; errCells = new Set();
       msg.textContent = '—'; msg.className = ''; $('st-ms').textContent = '—'; errs.replaceChildren();
@@ -446,7 +447,7 @@ function parseLocal() { // самбарыг текст талбартай зэр
   const lines = input.value.trim() ? input.value.trim().split(/\n+/) : [];
   const rows = Array.from({length: 9}, (_, r) => {
     const cells = lines[r] ? lines[r].trim().split(/[\s,]+/) : [];
-    return Array.from({length: 9}, (_, c) => /^\d{1,2}$/.test(cells[c] || '') ? cells[c] : '');
+    return Array.from({length: 9}, (_, c) => /^[1-9]\d?$/.test(cells[c] || '') ? cells[c] : '');
   });
   board = rows;
 }
