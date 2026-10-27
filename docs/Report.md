@@ -160,8 +160,8 @@ Python (threading), C (POSIX Pthreads) болон онлайн (React, Web Worke
 
 | Гишүүн | Хариуцах ажил | Commit/file |
 |---|---|---|
-| B241940010 О. Батцэцэг | | |
-| B242270090 А. Пүрэвдэмбэрэл | | |
+| B241940010 О. Батцэцэг | Python validator (11/27 урсгал), C Pthreads хувилбар, онлайн React хувилбар, UI ба урсгалын диаграм, тест, GitHub Actions (CI, Pages, Release), README, Report, Manual, зураг | `src/`, `web/`, `tests/`, `.github/`, `docs/`, README.md |
+| B242270090 А. Пүрэвдэмбэрэл | Самбарын нүдийг засварладаг болгосон, текстийн уншигдах байдлыг сайжруулсан | commit `67d52ab`, `15bcf76`; `Board.jsx`, `Validator.jsx`, `ui.html`, `style.css` |
 | B241910002 Г. Ундрам | | |
 | B222270837 А. Дөлгөөн | | |
 | B241910025 Т. Цэрэндулам | | |
