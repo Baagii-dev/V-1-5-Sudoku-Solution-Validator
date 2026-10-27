@@ -13,7 +13,7 @@
 <p align="center" style="margin:0;font-size:12pt">А. Дөлгөөн /B222270837/</p>
 <p align="center" style="margin:0;font-size:12pt">Т. Цэрэндулам /B241910025/</p>
 <p align="center" style="margin:0;font-size:12pt">Э. Өлзийсүрэн /B190910811/</p>
-<p align="center" style="margin:22px 0 0;font-size:12pt">Шалгасан: /....................................../</p>
+<p align="center" style="margin:22px 0 0;font-size:12pt">Шалгасан: /....................................../ Г. Ганбат /F.CS10/</p>
 <div style="position:absolute;bottom:0;left:0;right:0">
 <p align="center" style="margin:0;font-size:12pt">Улаанбаатар хот</p>
 <p align="center" style="margin:4px 0 0;font-size:12pt">2026 он</p>
