@@ -1,3 +1,25 @@
+<div align="center" style="height:262mm;position:relative;text-align:center;font-family:'Times New Roman',Times,serif;color:#000;page-break-after:always">
+<p align="center" style="margin:0 0 4px;font-size:12pt;font-weight:bold">ШИНЖЛЭХ УХААН, ТЕХНОЛОГИЙН ИХ СУРГУУЛЬ</p>
+<p align="center" style="margin:0;font-size:12pt;font-weight:bold">МЭДЭЭЛЭЛ, ХОЛБООНЫ ТЕХНОЛОГИЙН СУРГУУЛЬ</p>
+<p align="center" style="margin:28px 0 0"><img src="img/shutis_logo.png" alt="ШУТИС" style="height:105px;border:0;margin:0"></p>
+<p align="center" style="margin:70px 0 6px;font-size:34pt;font-weight:bold">Бие даалт 1. Гарын авлага</p>
+<p align="center" style="margin:0;font-size:26pt;font-weight:bold">F.CSM302 Үйлдлийн систем</p>
+<p align="center" style="margin:26px 0 0;font-size:12pt">2026-2027 оны хичээлийн жилийн намар</p>
+<p align="center" style="margin:60px 0 0;font-size:12pt"><b>Сэдэв:</b> V-1-5 Sudoku Solution Validator (Threads &amp; Concurrency)</p>
+<p align="center" style="margin:60px 0 0;font-size:12pt">Бэлтгэсэн: /................................../ О. Батцэцэг /B241940010/</p>
+<p align="center" style="margin:22px 0 4px;font-size:12pt">Багийн гишүүд:</p>
+<p align="center" style="margin:0;font-size:12pt">А. Пүрэвдэмбэрэл /B242270090/</p>
+<p align="center" style="margin:0;font-size:12pt">Г. Ундрам /B241910002/</p>
+<p align="center" style="margin:0;font-size:12pt">А. Дөлгөөн /B222270837/</p>
+<p align="center" style="margin:0;font-size:12pt">Т. Цэрэндулам /B241910025/</p>
+<p align="center" style="margin:0;font-size:12pt">Э. Өлзийсүрэн /B190910811/</p>
+<p align="center" style="margin:22px 0 0;font-size:12pt">Шалгасан: /....................................../</p>
+<div style="position:absolute;bottom:0;left:0;right:0">
+<p align="center" style="margin:0;font-size:12pt">Улаанбаатар хот</p>
+<p align="center" style="margin:4px 0 0;font-size:12pt">2026 он</p>
+</div>
+</div>
+
 # V-1-5 Sudoku Solution Validator: Manual
 
 ## 1. Хэрэглэгчийн заавар
