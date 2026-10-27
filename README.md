@@ -61,7 +61,56 @@ make                                    # build
 make test                               # Python хувилбартай гаралтыг тулгана
 ```
 
-Windows дээр C хувилбарыг WSL (Ubuntu) дотор ажиллуулна, эсвэл Python/онлайн хувилбарыг хэрэглэнэ.
+### Үйлдлийн систем бүрээр
+
+| Хувилбар | macOS | Linux | Windows |
+|---|---|---|---|
+| Python | ажиллана | ажиллана | ажиллана (`python` эсвэл `py`) |
+| C (Pthreads) | ажиллана | ажиллана | WSL (Ubuntu) дотор ажиллана |
+| Онлайн | ажиллана | ажиллана | ажиллана |
+
+**macOS** (C хөрвүүлэгч байхгүй бол эхлээд `xcode-select --install`):
+
+```bash
+git clone https://github.com/Baagii-dev/V-1-5-Sudoku-Solution-Validator.git
+cd V-1-5-Sudoku-Solution-Validator/src/c
+make
+./validator --mode=11 ../../tests/valid_book.txt
+./validator --mode=27 ../../tests/invalid_box.txt
+```
+
+**Linux (Ubuntu)**:
+
+```bash
+sudo apt install -y build-essential git
+git clone https://github.com/Baagii-dev/V-1-5-Sudoku-Solution-Validator.git
+cd V-1-5-Sudoku-Solution-Validator/src/c
+make
+./validator --mode=11 ../../tests/valid_book.txt
+./validator --mode=27 ../../tests/invalid_box.txt
+```
+
+**Windows**: Python хувилбарыг PowerShell эсвэл Command Prompt дээр ажиллуулна.
+
+```bash
+git clone https://github.com/Baagii-dev/V-1-5-Sudoku-Solution-Validator.git
+cd V-1-5-Sudoku-Solution-Validator
+python src/app.py
+```
+
+C хувилбарыг Windows дээр WSL-ээр ажиллуулна. PowerShell дээр `wsl --install` хийж Ubuntu суулгасны дараа Ubuntu терминалд:
+
+```bash
+sudo apt update && sudo apt install -y build-essential git
+git clone https://github.com/Baagii-dev/V-1-5-Sudoku-Solution-Validator.git
+cd V-1-5-Sudoku-Solution-Validator/src/c
+make
+./validator --mode=11 ../../tests/valid_book.txt
+```
+
+Хүлээгдэх үр дүн: `valid_book.txt` дээр `ЗӨВ ШИЙД (11 урсгал)`, `invalid_box.txt` дээр `БУРУУ ШИЙД` ба давхардсан нүднүүд.
+
+**Гэрэл/харанхуй горим:** онлайн болон Python хувилбарын дээд талын товчоор солино. Анхны сонголт нь төхөөрөмжийн тохиргооноос шалтгаална, сонголтыг хөтөч хадгална.
 
 **Командын мөрөөс шалгах (UI-гүй):**
 
