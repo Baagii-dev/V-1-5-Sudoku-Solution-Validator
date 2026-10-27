@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Board from '../components/Board.jsx';
 import ThreadDiagram from '../components/ThreadDiagram.jsx';
 import { parseBoard, SIZE } from '../core/parseBoard.js';
+import { boardPreview, boardToText } from '../core/boardText.js';
 import { buildTasks } from '../core/tasks.js';
 import { validate } from '../core/validate.js';
 import { DEFAULT_SAMPLE, SAMPLES } from '../samples.js';
@@ -23,14 +24,6 @@ function initialState() {
     speed: SPEEDS.some(([v]) => v === q.get('speed')) ? q.get('speed') : '450',
     autorun: q.get('autorun') === '1',
   };
-}
-
-function boardPreview(text) {
-  const lines = String(text).trim().split(/\r\n|\r|\n/);
-  return Array.from({ length: SIZE }, (_, r) => {
-    const cells = (lines[r] || '').trim().replaceAll(',', ' ').split(/\s+/).filter(Boolean);
-    return Array.from({ length: SIZE }, (_, c) => /^\d{1,2}$/.test(cells[c] || '') ? cells[c] : '');
-  });
 }
 
 export default function Validator() {
@@ -139,7 +132,7 @@ export default function Validator() {
   const onCellChange = (row, col, value) => {
     const next = boardPreview(text);
     next[row][col] = value;
-    setText(next.map((line) => line.join(' ')).join('\n'));
+    setText(boardToText(next));
     reset();
   };
 

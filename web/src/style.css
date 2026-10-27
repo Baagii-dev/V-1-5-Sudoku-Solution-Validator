@@ -87,7 +87,7 @@ a { color: inherit; }
 .td-bar { height: 6px; border-radius: 3px; background: #1a1f31; overflow: hidden; }
 .td-bar i { display: block; height: 100%; width: 0; background: var(--blue); }
 .td-state { margin-top: 8px; color: #7d88a8; }
-.td-meta { margin-top: 2px; color: #566080; font-size: 12px; }
+.td-meta { margin-top: 2px; color: #8a95b5; font-size: 12px; }
 .td-card.run { border-color: var(--amber); box-shadow: 0 0 14px rgba(240, 176, 80, 0.25); }
 .td-card.run .td-led { background: var(--amber); animation: td-pulse 0.8s ease-in-out infinite; }
 .td-card.run .td-bar i { width: 60%; background: var(--amber); animation: td-fill 1s ease-in-out infinite alternate; }

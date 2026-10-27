@@ -4,6 +4,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { parseBoard } from '../src/core/parseBoard.js';
 import { buildTasks, runTask } from '../src/core/tasks.js';
+import { boardPreview, boardToText } from '../src/core/boardText.js';
 
 const dir = fileURLToPath(new URL('../../tests/', import.meta.url));
 const load = (name) => parseBoard(readFileSync(dir + name, 'utf8'));
@@ -48,4 +49,23 @@ test('тестийн бүх файл зөв ангилагдана', () => {
     const valid = parsed.board ? check(name).valid : false;
     assert.equal(valid, expectValid.has(name), name);
   }
+});
+
+test('самбарын нүд засах: текст рүү хөрвүүлэх', () => {
+  const rows = boardPreview(readFileSync(dir + 'valid_book.txt', 'utf8'));
+  assert.equal(rows[0][0], '6');
+  rows[0][4] = ''; // нүд цэвэрлэв
+  const text = boardToText(rows);
+  assert.equal(text.split('\n')[0], '6 2 4 5 0 9 1 8 7');
+  const parsed = parseBoard(text);
+  assert.equal(parsed.errors.length, 1);
+  assert.match(parsed.errors[0].message, /1-р мөр, 5-р багана/);
+  assert.equal(boardPreview(text)[0][4], '');
+});
+
+test('самбарын урьдчилсан харагдац: муу өгөгдөлд тэсвэртэй', () => {
+  const rows = boardPreview('x 2\n1 2 3');
+  assert.equal(rows.length, 9);
+  assert.equal(rows[0][0], '');
+  assert.equal(rows[0][1], '2');
 });
