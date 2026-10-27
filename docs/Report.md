@@ -7,6 +7,12 @@
 <p align="center" style="margin:26px 0 0;font-size:12pt">2026-2027 оны хичээлийн жилийн намар</p>
 <p align="center" style="margin:60px 0 0;font-size:12pt"><b>Сэдэв:</b> V-1-5 Sudoku Solution Validator (Threads &amp; Concurrency)</p>
 <p align="center" style="margin:60px 0 0;font-size:12pt">Бэлтгэсэн: /................................../ О. Батцэцэг /B241940010/</p>
+<p align="center" style="margin:22px 0 4px;font-size:12pt">Багийн гишүүд:</p>
+<p align="center" style="margin:0;font-size:12pt">А. Пүрэвдэмбэрэл /B242270090/</p>
+<p align="center" style="margin:0;font-size:12pt">Г. Ундрам /B241910002/</p>
+<p align="center" style="margin:0;font-size:12pt">А. Дөлгөөн /B222270837/</p>
+<p align="center" style="margin:0;font-size:12pt">Т. Цэрэндулам /B241910025/</p>
+<p align="center" style="margin:0;font-size:12pt">Э. Өлзийсүрэн /B190910811/</p>
 <p align="center" style="margin:22px 0 0;font-size:12pt">Шалгасан: /....................................../</p>
 <div style="position:absolute;bottom:0;left:0;right:0">
 <p align="center" style="margin:0;font-size:12pt">Улаанбаатар хот</p>
