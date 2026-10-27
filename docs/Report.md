@@ -135,7 +135,7 @@ Python (threading), C (POSIX Pthreads) болон онлайн (React, Web Worke
 - Git, CI (олон үйлдлийн систем дээр тест), semantic release ашиглан багаар ажилласан туршлага авсан.
 
 ## GitHub дахь багийн ажиллагаа
-Эх код нь анхнаасаа GitHub репозиторид (https://github.com/Baagii-dev/V-1-5-Sudoku-Solution-Validator) хөтлөгдсөн. 2026-10-09-ээс хойш нийт 49 commit хийгдсэн: B241940010 гишүүний нэрээр 45 (git-д өөр нэрээр тохируулагдсан 3 commit-ийг оруулаад), А. Пүрэвдэмбэрэл гишүүний нэрээр 2, git-д нэр тохируулаагүй ("Таны GitLab нэр") 2. Commit-уудыг Conventional Commits загвараар (`fix:`) бичсэн.
+Эх код нь анхнаасаа GitHub репозиторид (https://github.com/Baagii-dev/V-1-5-Sudoku-Solution-Validator) хөтлөгдсөн. 2026-10-09-ээс хойш нийт 58 commit хийгдсэн: B241940010 гишүүний нэрээр 54 (git-д өөр нэрээр тохируулагдсан 3 commit-ийг оруулаад), А. Пүрэвдэмбэрэл гишүүний нэрээр 2, git-д нэр тохируулаагүй ("Таны GitLab нэр") 2. Commit-уудыг Conventional Commits загвараар (`fix:`) бичсэн.
 
 | Зүйл | Тайлбар |
 |---|---|
