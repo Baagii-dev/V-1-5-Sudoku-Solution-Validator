@@ -106,7 +106,7 @@ React UI (App.jsx) --parseBoard--> validate(board, mode)
 | 8 | `bad_short.txt` | Оролтын алдаа | `9 мөр байх ёстой, 8 мөр байна.` |
 | 9 | 11 ба 27 горим | Адил дүгнэлт | `test_modes_agree` OK |
 | 10 | Python unit тест | 11/11 | `Ran 11 tests ... OK` |
-| 11 | JavaScript тест | 6/6 | `tests 6, pass 6` |
+| 11 | JavaScript тест | 8/8 | `tests 8, pass 8` |
 
 Дэлгэцийн зураг:
 

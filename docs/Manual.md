@@ -148,7 +148,7 @@ cd web && npm test                 # JavaScript тест
 | `tests/bad_short.txt` | `9 мөр байх ёстой, 8 мөр байна.` ба `2-р мөрөнд 9 утга байх ёстой` |
 
 ### 2.7 Хүлээгдсэн үр дүн
-`python3 tests/test_validator.py` нь `Ran 11 tests ... OK` гэж дуусна. `cd web && npm test` нь `tests 6, pass 6, fail 0` гэж дуусна.
+`python3 tests/test_validator.py` нь `Ran 11 tests ... OK` гэж дуусна. `cd web && npm test` нь `tests 8, pass 8, fail 0` гэж дуусна.
 
 ### 2.8 Known issues
 - Python-ы GIL-ийн улмаас урсгалууд жинхэнэ зэрэгцээ тооцоолохгүй. Энэ нь зөв ажиллагаанд нөлөөлөхгүй.
