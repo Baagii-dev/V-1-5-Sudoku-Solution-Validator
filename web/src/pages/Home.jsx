@@ -56,10 +56,6 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="band">
-        <b>Бэлэн үү? Тестийн өгөгдлөөр эсвэл өөрийн хүснэгтээр шалгаж үзээрэй.</b>
-        <a className="cta" href="#/validator">Шалгагч руу очих →</a>
-      </div>
     </div>
   );
 }
