@@ -26,7 +26,7 @@ def parse_board(text):
             errors.append((r, None, f"{r}-р мөрөнд {SIZE} утга байх ёстой, {len(tokens)} утга байна."))
         row = []
         for c, tok in enumerate(tokens, start=1):
-            if not tok.isdigit():
+            if not (tok.isascii() and tok.isdigit()):  # '²', '٣' зэрэг Unicode цифр int()-д унана
                 errors.append((r, c, f"{r}-р мөр, {c}-р багана: '{tok}' нь тоо биш."))
                 row.append(0)
                 continue

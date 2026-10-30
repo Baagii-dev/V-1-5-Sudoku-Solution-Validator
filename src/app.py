@@ -45,7 +45,11 @@ class Handler(BaseHTTPRequestHandler):
             length = int(self.headers.get("Content-Length", 0))
             if length > MAX_BODY:
                 return self._send(413, {"errors": [{"row": None, "col": None, "message": "Оролт хэт том байна."}]})
+            if length < 0:
+                raise ValueError("Content-Length сөрөг байж болохгүй.")
             payload = json.loads(self.rfile.read(length) or b"{}")
+            if not isinstance(payload, dict):
+                raise ValueError("JSON нь объект байх ёстой.")
             text = payload.get("board", "")
             mode = int(payload.get("mode", 11))
             if mode not in MODES:

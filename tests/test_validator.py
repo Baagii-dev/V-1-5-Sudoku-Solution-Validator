@@ -1,12 +1,17 @@
 """Ажиллуулах: python -m unittest discover -s tests -t . -v  (эсвэл: python tests/test_validator.py)"""
 
+import http.client
+import json
+import subprocess
 import sys
 import tempfile
+import threading
 import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-sys.path.insert(0, str(ROOT.parent / "src"))
+SRC = ROOT.parent / "src"
+sys.path.insert(0, str(SRC))
 
 from sudoku_io import SudokuInputError, load_board  # noqa: E402
 from validator import build_tasks, validate  # noqa: E402
@@ -75,6 +80,85 @@ class ValidatorTests(unittest.TestCase):
     def test_bad_mode(self):
         with self.assertRaises(ValueError):
             build_tasks(5)
+
+    def test_unicode_digits_rejected(self):
+        # '²'.isdigit() == True боловч int('²') унадаг (review R1)
+        from sudoku_io import parse_board
+
+        base = (ROOT / "valid_book.txt").read_text(encoding="utf-8-sig").splitlines()
+        for tok in ("²", "٣", "５"):
+            lines = list(base)
+            lines[0] = tok + lines[0][1:]
+            with self.assertRaises(SudokuInputError, msg=tok) as cm:
+                parse_board("\n".join(lines))
+            self.assertIn("тоо биш", str(cm.exception))
+
+    def test_cli_bad_mode_exits_cleanly(self):
+        # --mode=abc, --mode=12 нь traceback биш usage мессеж, exit 2 (review R3)
+        for arg in ("--mode=abc", "--mode=12", "--mode="):
+            p = subprocess.run(
+                [sys.executable, str(SRC / "validator.py"), arg, str(ROOT / "valid_book.txt")],
+                capture_output=True, text=True, encoding="utf-8",
+            )
+            self.assertEqual(p.returncode, 2, arg)
+            self.assertNotIn("Traceback", p.stderr, arg)
+            self.assertIn("--mode", p.stdout, arg)
+
+
+class ApiTests(unittest.TestCase):
+    """HTTP API: буруу хүсэлтэд сервер хариу өгөх ёстой (review R1, R2)."""
+
+    @classmethod
+    def setUpClass(cls):
+        from http.server import ThreadingHTTPServer
+
+        import app
+
+        cls.server = ThreadingHTTPServer(("127.0.0.1", 0), app.Handler)
+        cls.port = cls.server.server_address[1]
+        threading.Thread(target=cls.server.serve_forever, daemon=True).start()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.server.shutdown()
+        cls.server.server_close()
+
+    def post(self, body, length=None):
+        conn = http.client.HTTPConnection("127.0.0.1", self.port, timeout=5)
+        data = body if isinstance(body, bytes) else body.encode("utf-8")
+        headers = {"Content-Type": "application/json", "Content-Length": str(len(data) if length is None else length)}
+        conn.request("POST", "/api/validate", body=data, headers=headers)
+        resp = conn.getresponse()
+        out = resp.status, json.loads(resp.read())
+        conn.close()
+        return out
+
+    def test_valid_request(self):
+        text = (ROOT / "valid_book.txt").read_text(encoding="utf-8-sig")
+        status, body = self.post(json.dumps({"board": text, "mode": 27}))
+        self.assertEqual(status, 200)
+        self.assertTrue(body["valid"])
+
+    def test_non_object_json_gets_400(self):
+        for raw in ("[]", "null", '"x"', "5", "true"):
+            status, body = self.post(raw)
+            self.assertEqual(status, 400, raw)
+            self.assertIn("errors", body, raw)
+
+    def test_unicode_digit_board_gets_400(self):
+        text = (ROOT / "valid_book.txt").read_text(encoding="utf-8-sig")
+        status, body = self.post(json.dumps({"board": "²" + text[1:]}))
+        self.assertEqual(status, 400)
+        self.assertTrue(any("тоо биш" in e["message"] for e in body["errors"]))
+
+    def test_bad_mode_and_board_type_get_400(self):
+        for payload in ({"board": "x", "mode": "abc"}, {"board": "x", "mode": 12}, {"board": 5}, {"board": "x", "mode": []}):
+            status, _ = self.post(json.dumps(payload))
+            self.assertEqual(status, 400, payload)
+
+    def test_negative_content_length_gets_400(self):
+        status, _ = self.post("{}", length=-1)
+        self.assertEqual(status, 400)
 
 
 if __name__ == "__main__":

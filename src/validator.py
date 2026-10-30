@@ -117,7 +117,11 @@ def main(argv):
     paths = []
     for a in argv:
         if a.startswith("--mode="):
-            mode = int(a.split("=", 1)[1])
+            value = a.split("=", 1)[1]
+            if value not in {str(m) for m in MODES}:
+                print(f"--mode нь {' эсвэл '.join(map(str, MODES))} байх ёстой: {a}")
+                return 2
+            mode = int(value)
         else:
             paths.append(a)
     if not paths:
