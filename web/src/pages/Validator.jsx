@@ -37,6 +37,7 @@ export default function Validator() {
   const [busy, setBusy] = useState(false);
   const [wall, setWall] = useState(null); // validate()-ийн нийт хугацаа, мс
   const timer = useRef(null);
+  const runId = useRef(0); // reset/засвар/шинэ Run бүр нэмэгдэж, удаан ирсэн хуучин хариуг хаяна
 
   const stop = () => {
     clearInterval(timer.current);
@@ -44,6 +45,7 @@ export default function Validator() {
   };
 
   const reset = useCallback(() => {
+    runId.current += 1;
     stop();
     setRun(null);
     setStep(0);
@@ -61,6 +63,7 @@ export default function Validator() {
 
   const start = useCallback(async () => {
     stop();
+    const id = ++runId.current;
     setRun(null);
     setStep(0);
     const parsed = parseBoard(text);
@@ -75,10 +78,12 @@ export default function Validator() {
     try {
       result = await validate(parsed.board, mode);
     } catch (e) {
+      if (id !== runId.current) return;
       setErrors([{ row: null, col: null, message: `Шалгалт амжилтгүй: ${e.message}` }]);
       setBusy(false);
       return;
     }
+    if (id !== runId.current) return;
     setBusy(false);
     setWall(Math.round((performance.now() - t0) * 10) / 10);
     setRun({ board: parsed.board, threads: result.threads, valid: result.valid });

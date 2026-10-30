@@ -437,7 +437,10 @@ function placeholderThreads() {
   threads = n; status = n.map(() => 'wait');
 }
 
+let runId = 0; // reset/засвар/шинэ Run бүр нэмэгдэж, удаан ирсэн хуучин хариуг хаяна
+
 function reset() {
+  runId++;
   clearInterval(timer); timer = null;
   board = null; bad = new Set(); cur = null; threads = []; status = []; errCells = new Set();
   msg.textContent = '—'; msg.className = ''; $('st-ms').textContent = '—'; errs.replaceChildren();
@@ -463,14 +466,17 @@ function showInputErrors(list) {
 
 async function run() {
   reset();
+  const id = runId;
   let data;
   const t0 = performance.now();
   try {
     const res = await fetch('/api/validate', {method: 'POST', headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({board: input.value, mode: Number($('mode').value)})});
     data = await res.json();
+    if (id !== runId) return;
     if (!res.ok) { showInputErrors(data.errors || [{message: 'Серверийн алдаа'}]); drawBoard(); return; }
   } catch (e) {
+    if (id !== runId) return;
     msg.textContent = 'Сервертэй холбогдож чадсангүй (python src/app.py ажиллаж байгаа эсэхийг шалгана уу)'; msg.className = 'err'; return;
   }
   $('st-ms').textContent = Math.round((performance.now() - t0) * 10) / 10 + ' мс';
@@ -512,7 +518,7 @@ async function init() {
   if (q.get('autorun') === '1') run();
 }
 $('sample').onchange = () => { input.value = $('sample').value; reset(); };
-input.oninput = () => { clearInterval(timer); bad = new Set(); cur = null; threads = []; status = []; errCells = new Set(); board = null; msg.textContent = '—'; msg.className = ''; $('st-ms').textContent = '—'; errs.replaceChildren(); placeholderThreads(); parseLocal(); drawBoard(); drawThreads(); };
+input.oninput = () => { runId++; clearInterval(timer); bad = new Set(); cur = null; threads = []; status = []; errCells = new Set(); board = null; msg.textContent = '—'; msg.className = ''; $('st-ms').textContent = '—'; errs.replaceChildren(); placeholderThreads(); parseLocal(); drawBoard(); drawThreads(); };
 $('file').onchange = async e => {
   const f = e.target.files[0]; if (!f) return;
   input.value = await f.text(); e.target.value = ''; input.oninput();
