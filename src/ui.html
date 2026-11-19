@@ -259,7 +259,7 @@ a { color: inherit; }
     <div class="stat ok"><span>OK</span><b id="st-ok">0</b></div>
     <div class="stat err"><span>АЛДАА</span><b id="st-err">0</b></div>
     <div class="stat"><span>Давхардсан нүд</span><b id="st-bad">—</b></div>
-    <div class="stat"><span>Нийт хугацаа</span><b id="st-ms">—</b></div>
+    <div class="stat"><span title="Сервер дээр бүх урсгалыг шалгасан хугацаа (алхам алхмаар тоглуулах хугацаа орохгүй)">Шалгалтын хугацаа</span><b id="st-ms">—</b></div>
   </div>
 
   <div class="main">
@@ -481,6 +481,7 @@ async function run() {
   }
   $('st-ms').textContent = Math.round((performance.now() - t0) * 10) / 10 + ' мс';
   board = data.board; threads = data.threads; status = threads.map(() => 'wait');
+  msg.textContent = 'Үр дүнг тоглуулж байна…'; msg.className = 'run';
   const steps = [];
   threads.forEach((t, ti) => t.groups.forEach((gr, gi) => steps.push({ti, gi, last: gi === t.groups.length - 1})));
   let n = 0;

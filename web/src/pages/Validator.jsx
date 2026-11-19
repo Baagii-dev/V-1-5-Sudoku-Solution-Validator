@@ -157,6 +157,7 @@ export default function Validator() {
   if (errors.length) [message, messageClass] = ['Оролтын алдаа', 'err'];
   else if (busy) [message, messageClass] = ['Шалгаж байна…', 'run'];
   else if (done) [message, messageClass] = run.valid ? ['Зөв шийд', 'ok'] : ['Буруу шийд', 'err'];
+  else if (run) [message, messageClass] = ['Үр дүнг тоглуулж байна…', 'run'];
 
   return (
     <div className="vpage">
@@ -232,7 +233,7 @@ export default function Validator() {
         <div className="stat ok"><span>OK</span><b>{okCount}</b></div>
         <div className="stat err"><span>АЛДАА</span><b>{errCount}</b></div>
         <div className="stat"><span>Давхардсан нүд</span><b>{run ? bad.size : '—'}</b></div>
-        <div className="stat"><span>Нийт хугацаа</span><b>{wall !== null ? `${wall} мс` : '—'}</b></div>
+        <div className="stat"><span title="Бүх урсгалыг шалгасан хугацаа (алхам алхмаар тоглуулах хугацаа орохгүй)">Шалгалтын хугацаа</span><b>{wall !== null ? `${wall} мс` : '—'}</b></div>
       </div>
 
       <div className="main">
