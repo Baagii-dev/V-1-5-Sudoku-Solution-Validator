@@ -1,6 +1,6 @@
 # V-1-5 – Sudoku Solution Validator
 
-**Хичээл:** F.CSM302 Үйлдлийн систем – Бие даалт 1
+**Хичээл:** F.CSM302 Үйлдлийн систем – Бие даалт 1 ба 2 (Final)
 **Хуваарилалтын код:** V-1-5
 **Сурах бичиг:** Operating System Concepts (2018), Бүлэг 4 – Threads & Concurrency, Programming Project
 **UI дүрслэл:** Sudoku board
@@ -21,6 +21,14 @@
 9x9 Sudoku хүснэгтийн шийд зөв эсэхийг олон урсгалаар шалгана. Мөр, багана,
 3x3 дэд хүснэгт бүрийг тусдаа урсгал шалгаж, үр дүнг эцэг урсгал нэгтгэнэ.
 Шалгалтын үр дүнг Sudoku самбар дээр мөр, багана, дэд хүснэгтээр ялган харуулна.
+
+## Final release (Бие даалт 2)
+
+**Final release:** [v1.0.40](https://github.com/Baagii-dev/V-1-5-Sudoku-Solution-Validator/releases/tag/v1.0.40)
+
+Баримт: [Final Report](docs/V-1-5_Final_Report.pdf), [Manual](docs/V-1-5_Manual.pdf), [Бие даалт 1 тайлан](docs/V-1-5_BD1_Report.pdf).
+
+![Sudoku Solution Validator: зөв шийд, 11 урсгал](docs/img/01_valid.png)
 
 ## Онлайн хувилбар (татах шаардлагагүй)
 

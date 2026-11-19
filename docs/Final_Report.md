@@ -3,7 +3,7 @@
 **Хуваарилалтын код:** V-1-5
 **Төсөл:** Sudoku Solution Validator (Operating System Concepts 2018, Бүлэг 4, Threads & Concurrency)
 **Гишүүд:** О. Батцэцэг (B241940010); А. Пүрэвдэмбэрэл (B242270090); Г. Ундрам (B241910002); А. Дөлгөөн (B222270837); Т. Цэрэндулам (B241910025); Э. Өлзийсүрэн (B190910811)
-**GitHub final release:** https://github.com/Baagii-dev/V-1-5-Sudoku-Solution-Validator/releases/latest
+**GitHub final release:** https://github.com/Baagii-dev/V-1-5-Sudoku-Solution-Validator/releases/tag/v1.0.40
 
 ## Хураангуй
 БД1-ээр хэрэгжүүлсэн Sudoku Solution Validator төслийг (Python threading, C POSIX Pthreads, онлайн React ба Web Worker) II-4-14 багийн албан ёсны шүүмжид тулгуурлан сайжруулсан. Нийт 8 санал (R1–R5, S1–S3) ирснээс 6-г бүрэн, 2-ыг хэсэгчлэн шийдвэрлэсэн. Хамгийн чухал нь Major түвшний R4: Reset-ийн дараа удаан ирсэн хуучин хариуг UI-д ашигладаг алдааг Python UI болон React хувилбарт зассан. Оролтын алдааны боловсруулалтыг (Unicode цифр, JSON бүтэц, CLI горим) сайжруулж, Python тестийг 11-ээс 18 болгосон. JavaScript 8 тест, C ба Python гаралтын тулгалт хэвээр тэнцсэн. Урсгалын тоо нэмэхэд шалгалтын хугацаа нэмэгддэгийг (1 урсгал 0.038 мс, 11 урсгал 0.368 мс, 27 урсгал 0.794 мс) хэмжиж баримтжуулсан.
